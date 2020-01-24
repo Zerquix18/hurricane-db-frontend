@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
+import MapArea from './MapArea';
 
 const Application: React.FC = () => {
   return (
@@ -13,7 +14,7 @@ const Application: React.FC = () => {
             <Sidebar />
           </Grid.Column>
           <Grid.Column computer={12}>
-            COLUMN 2
+          <MapArea />
           </Grid.Column>
         </Grid>
       </div>
