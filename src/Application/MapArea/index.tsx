@@ -1,19 +1,14 @@
 import React from 'react';
 import { Map as GoogleMap } from 'UI'
-
-// The Atlantic, for now.
-const defaultCenter = {
-  lat: 21.902656006558043,
-  lng: -72.88469006709305,
-};
-
-const defaultZoom = 5;
+import { useMap } from 'hooks';
 
 const MapArea: React.FC = () => {
+  const { center, zoom } = useMap();
+  
   return (
     <GoogleMap
-      center={defaultCenter}
-      zoom={defaultZoom}
+      center={center}
+      zoom={zoom}
     />
   );
 };

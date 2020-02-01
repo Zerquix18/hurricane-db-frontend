@@ -3,10 +3,11 @@ import { Grid } from 'semantic-ui-react';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import MapArea from './MapArea';
+import { AppStateProvider } from 'providers';
 
 const Application: React.FC = () => {
   return (
-    <div>
+    <AppStateProvider>
       <Navbar />
       <div style={{ marginLeft: 10, marginRight: 10 }}>
         <Grid>
@@ -18,7 +19,7 @@ const Application: React.FC = () => {
           </Grid.Column>
         </Grid>
       </div>
-    </div>
+    </AppStateProvider>
   );
 };
 
