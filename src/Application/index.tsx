@@ -5,18 +5,19 @@ import { AppStateProvider } from 'providers';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import MapArea from './MapArea';
+import { fetchHurricane } from 'api';
 
 const Application: React.FC = () => {
   const hurricaneMode = useRouteMatch({ path: '/:basin/:season/:name', strict: true });
   const seasonMode = useRouteMatch({ path: '/:basin/:year', strict: true });
-  const rankingMode = useRouteMatch({ path: '/ranking/:ranking', strict: true, })
+  const rankingMode = useRouteMatch({ path: '/ranking/:ranking', strict: true, });
   const searchMode = useRouteMatch({ path: '/search', strict: true });
   const history = useHistory();
 
   const setMode = () => {
-    console.log('setting mode');
     if (hurricaneMode) {
-      console.log('hurricane mode!');
+      const { basin, season, name } = hurricaneMode.params as any; // how come you have {} 
+      fetchHurricane(basin, season, name).then(console.log).catch(console.log);
       return;
     }
 
