@@ -3,7 +3,10 @@ import { AppState } from 'models';
 import reducer, { ActionParam } from './reducer';
 
 const initialState: AppState = {
-  mode: 'season',
+  mode: {
+    mode: null,
+  },
+  
   map: {
     center: { // Atlantic basin
       lat: 21.902656006558043,
@@ -12,7 +15,7 @@ const initialState: AppState = {
     zoom: 5,
     markers: [],
     polylines: []
-  }
+  },
 }
 
 const defaultContextState = {

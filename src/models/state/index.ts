@@ -1,6 +1,34 @@
 import { LatLng, Marker, Polyline } from 'models';
+import { Hurricane } from 'models/database';
 
-export type AppMode = 'rankings' | 'search' | 'season' | 'hurricane';
+// export type AppMode = 'rankings' | 'search' | 'season' | 'hurricane' | null;
+
+interface AppModeNone {
+  mode: null;
+}
+
+interface AppModeHurricane {
+  mode: 'hurricane';
+  hurricane: Hurricane | null;
+
+  loadedHurricane: boolean;
+  loadedPositions: boolean;
+  loadedWindspeeds: boolean;
+  error: string;
+}
+
+interface AppModeSeason {
+  mode: 'season';
+
+  hurricanes: Hurricane[] | null;
+  loadedSeason: boolean;
+  loadedPositions: boolean;
+  loadedWindSpeeds: boolean;
+
+  error: string;
+}
+
+type AppMode = AppModeNone | AppModeHurricane | AppModeSeason;
 
 class AppMapState {
   center: LatLng;

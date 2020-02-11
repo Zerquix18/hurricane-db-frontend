@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { useRouteMatch, useHistory } from 'react-router';
-import { AppStateProvider } from 'providers';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import MapArea from './MapArea';
 import { fetchHurricane } from 'api';
+import { useMode } from 'hooks';
 
 const Application: React.FC = () => {
   const hurricaneMode = useRouteMatch({ path: '/:basin/:season/:name', strict: true });
@@ -13,11 +13,13 @@ const Application: React.FC = () => {
   const rankingMode = useRouteMatch({ path: '/ranking/:ranking', strict: true, });
   const searchMode = useRouteMatch({ path: '/search', strict: true });
   const history = useHistory();
+  const mode = useMode();
 
   const setMode = () => {
     if (hurricaneMode) {
-      const { basin, season, name } = hurricaneMode.params as any; // how come you have {} 
-      fetchHurricane(basin, season, name).then(console.log).catch(console.log);
+      const { basin, season, name } = hurricaneMode.params as any; // how come you have {}
+      mode.setHurricaneMode();
+      fetchHurricane(basin, season, name).then(mode.setHurricane).catch(console.log);
       return;
     }
 
@@ -25,10 +27,10 @@ const Application: React.FC = () => {
     history.push('/atlantic/2017/maria');
   };
   
-  useEffect(setMode, [hurricaneMode, seasonMode, rankingMode, searchMode]);
+  useEffect(setMode, [!!hurricaneMode, !!seasonMode, !!rankingMode, !!searchMode]);
 
   return (
-    <AppStateProvider>
+    <div>
       <Navbar />
       <div style={{ marginLeft: 10, marginRight: 10 }}>
         <Grid>
@@ -40,7 +42,7 @@ const Application: React.FC = () => {
           </Grid.Column>
         </Grid>
       </div>
-    </AppStateProvider>
+    </div>
   );
 };
 

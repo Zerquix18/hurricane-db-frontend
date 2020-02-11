@@ -2,7 +2,17 @@ import { AppState } from 'models';
 
 type ReducerAction = (
   'SET_ZOOM' |
-  'SET_CENTER'
+  'SET_CENTER' |
+
+  // Set modes
+  'SET_MODE_NONE' |
+
+  'SET_MODE_HURRICANE' |
+  'HURRICANE_MODE_SET_HURRICANE' |
+  'HURRICANE_MODE_SET_LOADING' |
+  'HURRICANE_MODE_SET_ERROR'
+
+  // ..
 )
 
 interface StrictActionParam {
@@ -13,7 +23,7 @@ export interface ActionParam extends StrictActionParam {
   [key: string]: any
 }
 
-const reducer = (state: AppState, action: ActionParam): AppState => {
+const reducer = (state: AppState, action: ActionParam): AppState => {  
   switch (action.type) {
     case 'SET_CENTER':
       return {
@@ -34,7 +44,54 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
           zoom: action.zoom,
         }
       };
+    
+    case 'SET_MODE_HURRICANE':
+      return {
+        ...state,
+        mode: {
+          mode: 'hurricane',
+          hurricane: null,
+          loadedHurricane: false,
+          loadedPositions: false,
+          loadedWindspeeds: false,
+          error: '',
+        }
+      };
 
+    case 'HURRICANE_MODE_SET_HURRICANE':
+      if (state.mode.mode !== 'hurricane') {
+        return state;
+      }
+      return {
+        ...state,
+        mode: {
+          ...state.mode,
+          hurricane: action.hurricane,
+        }
+      };
+    case 'HURRICANE_MODE_SET_LOADING':
+      if (state.mode.mode !== 'hurricane') {
+        return state;
+      }
+      return {
+        ...state,
+        mode: {
+          ...state.mode,
+          ...action.loading,
+        }
+      };
+    case 'HURRICANE_MODE_SET_ERROR':
+      if (state.mode.mode !== 'hurricane') {
+        return state;
+      }
+      return {
+        ...state,
+        mode: {
+          ...state.mode,
+          error: action.error,
+        }
+      };
+    
     default:
       throw new Error("This will never happen hahaha (i hope pls)")
   }
