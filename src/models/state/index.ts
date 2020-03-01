@@ -12,8 +12,6 @@ interface AppModeHurricane {
   hurricane: Hurricane | null;
 
   loadedHurricane: boolean;
-  loadedPositions: boolean;
-  loadedWindspeeds: boolean;
   error: string;
 }
 

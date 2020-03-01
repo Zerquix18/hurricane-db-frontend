@@ -14,10 +14,8 @@ class HurricanePosition {
   event_type: HurricanePositionEventType | null;
   classification: HurricanePositionClassification;
 
-  source: string;
-
-  created_at: string; // a Date string
-  updated_at: string; // a Date string
+  wind_speed: number; // kt
+  pressure: number; // mb
 }
 
 export default HurricanePosition;
