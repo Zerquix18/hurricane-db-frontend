@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppModeHurricane } from 'models';
-import { Loader, Dimmer, Message, Header, Image, Segment, Divider } from 'semantic-ui-react';
+import { Loader, Dimmer, Message, Header, Image, Segment, Divider, Popup } from 'semantic-ui-react';
 import { translateBasin, formatNumber } from 'utils';
 import format from 'date-fns/format';
 
@@ -47,9 +47,22 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
           />
         )}
       </div>
-      <Segment compact>
-        { hurricane.description ? hurricane.description.substring(0, 280) : '' }...
-      </Segment>
+
+      { hurricane.description && (
+        <Segment compact>
+          { hurricane.description.substring(0, 280) }
+          { hurricane.description.length > 280 && (
+            <Popup
+              on="click"
+              position="left center"
+              trigger={<strong><a>... See more</a></strong>}
+            >
+              { hurricane.description }
+            </Popup>
+          )}
+        </Segment>
+      )}
+
       <p>
         <strong>Basin:</strong> { translateBasin(hurricane.basin) }
       </p>
