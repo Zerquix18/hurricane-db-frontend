@@ -34,7 +34,7 @@ const Application: React.FC = () => {
       <Navbar />
       <div style={{ marginLeft: 10, marginRight: 10 }}>
         <Grid>
-          <Grid.Column computer={3}>
+          <Grid.Column computer={4} style={{ height: '90vh'}}>
             <Sidebar />
           </Grid.Column>
           <Grid.Column computer={12}>

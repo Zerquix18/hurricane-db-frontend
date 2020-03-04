@@ -51,7 +51,7 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
         mode: {
           mode: 'hurricane',
           hurricane: null,
-          loadedHurricane: false,
+          loading: true,
           error: '',
         }
       };
@@ -65,6 +65,7 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
         mode: {
           ...state.mode,
           hurricane: action.hurricane,
+          loading: false,
         }
       };
     case 'HURRICANE_MODE_SET_LOADING':

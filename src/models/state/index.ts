@@ -7,11 +7,11 @@ interface AppModeNone {
   mode: null;
 }
 
-interface AppModeHurricane {
+export interface AppModeHurricane {
   mode: 'hurricane';
   hurricane: Hurricane | null;
 
-  loadedHurricane: boolean;
+  loading: boolean;
   error: string;
 }
 
