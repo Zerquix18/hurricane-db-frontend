@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppModeHurricane } from 'models';
-import { Loader, Dimmer, Message, Header, Image, Segment, Divider, Popup } from 'semantic-ui-react';
+import { Loader, Dimmer, Message, Header, Image, Segment, Divider, Popup, Icon } from 'semantic-ui-react';
 import { translateBasin, formatNumber } from 'utils';
 import format from 'date-fns/format';
 
@@ -58,6 +58,14 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
               trigger={<strong><a>... See more</a></strong>}
             >
               { hurricane.description }
+              { hurricane.description_source && (
+                <div style={{ textAlign: 'right' }}>
+                  <a href={hurricane.description_source} target="_blank">
+                    Source&nbsp;
+                    <Icon name="external alternate" size="small" />
+                  </a>
+                </div>
+              )}
             </Popup>
           )}
         </Segment>
