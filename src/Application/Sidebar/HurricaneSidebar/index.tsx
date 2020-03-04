@@ -3,6 +3,7 @@ import { AppModeHurricane } from 'models';
 import { Loader, Dimmer, Message, Header, Image, Segment, Divider, Popup, Icon } from 'semantic-ui-react';
 import { translateBasin, formatNumber } from 'utils';
 import format from 'date-fns/format';
+import { HurricaneCharts } from 'UI';
 
 interface HurricaneSidebarProps {
   hurricaneMode: AppModeHurricane;
@@ -107,7 +108,7 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
 
       <Divider />
 
-
+      <HurricaneCharts hurricane={hurricane} />
     </div>
   )
 }
