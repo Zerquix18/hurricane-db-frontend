@@ -1,6 +1,8 @@
 import React from 'react';
 import { AppModeHurricane } from 'models';
-import { Loader, Dimmer, Message, Header, Image, Segment } from 'semantic-ui-react';
+import { Loader, Dimmer, Message, Header, Image, Segment, Divider } from 'semantic-ui-react';
+import { translateBasin, formatNumber } from 'utils';
+import format from 'date-fns/format';
 
 interface HurricaneSidebarProps {
   hurricaneMode: AppModeHurricane;
@@ -48,8 +50,42 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
         )}
       </div>
       <Segment compact>
-        { hurricane.description ? hurricane.description.substring(0, 140) : '' }...
+        { hurricane.description ? hurricane.description.substring(0, 280) : '' }...
       </Segment>
+      <p>
+        <strong>Basin:</strong> { translateBasin(hurricane.basin) }
+      </p>
+      <p>
+        <strong>Season: </strong> { hurricane.season }
+      </p>
+      <p>
+        <strong>Formed: </strong> { format(new Date(hurricane.formed), 'MMMM L, yyyy') }
+      </p>
+      <p>
+        <strong>Dissipated: </strong> { format(new Date(hurricane.dissipated), 'MMMM L, yyyy') }
+      </p>
+      { hurricane.min_range_fatalities && hurricane.max_range_fatalities && (
+        <p>
+          <strong>Fatalities: </strong>
+          { hurricane.min_range_fatalities === hurricane.max_range_fatalities ?
+            formatNumber(hurricane.min_range_fatalities)
+          :
+            `${formatNumber(hurricane.min_range_fatalities)} - ${formatNumber(hurricane.max_range_fatalities)}`
+          }
+        </p>
+      )}
+
+      { hurricane.min_range_damage && hurricane.max_range_damage && (
+        <p>
+          <strong>Fatalities: </strong>
+          { hurricane.min_range_damage === hurricane.max_range_damage ?
+            `${formatNumber(hurricane.min_range_damage)} USD (${hurricane.season})`
+          :
+            `${formatNumber(hurricane.min_range_damage)} - ${formatNumber(hurricane.max_range_damage)} USD (${hurricane.season})`
+          }
+        </p>
+      )}
+      <Divider />
     </div>
   )
 }
