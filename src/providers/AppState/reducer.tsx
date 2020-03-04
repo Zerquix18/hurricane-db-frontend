@@ -52,8 +52,6 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
           mode: 'hurricane',
           hurricane: null,
           loadedHurricane: false,
-          loadedPositions: false,
-          loadedWindspeeds: false,
           error: '',
         }
       };
