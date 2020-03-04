@@ -28,8 +28,6 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
 
   const { hurricane } = hurricaneMode;
 
-  console.log(hurricane);
-
   // todo! change name
   // ive become a lazyass and now i just use inline styles
   return (
@@ -77,7 +75,7 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
 
       { hurricane.min_range_damage && hurricane.max_range_damage && (
         <p>
-          <strong>Fatalities: </strong>
+          <strong>Damage: </strong>
           { hurricane.min_range_damage === hurricane.max_range_damage ?
             `${formatNumber(hurricane.min_range_damage)} USD (${hurricane.season})`
           :
@@ -85,7 +83,10 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
           }
         </p>
       )}
+
       <Divider />
+
+
     </div>
   )
 }
