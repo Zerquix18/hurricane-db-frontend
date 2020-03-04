@@ -9,6 +9,7 @@ class Hurricane {
   basin: Basin;
   season: number;
   description: string | null;
+  description_source: string | null;
 
   formed: string; // a Date string
   dissipated: string; // a Date string
