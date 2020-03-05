@@ -7,24 +7,20 @@ interface HurricaneChartsProps {
 }
 
 const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
+
   const [modalOpen, changeModalOpen] = useState<boolean>(false);
+
   const toggleModal = () => {
     changeModalOpen(! modalOpen);
   };
 
-  const pressureData = (hurricane.positions || []).filter(position => {
-    return !! position.pressure;
-  }).map(position => {
-    const { moment, pressure } = position;
-    return { moment, pressure };
-  });
+  const pressureData = (hurricane.positions || [])
+                       .filter(({ pressure }) => !! pressure)
+                       .map(({ moment, pressure }) => ({ moment, pressure }))
 
-  const windSpeedData = (hurricane.positions || []).filter(position => {
-    return !! position.wind_speed;
-  }).map(position => {
-    const { moment, wind_speed } = position;
-    return { moment, wind_speed };
-  });
+  const windSpeedData = (hurricane.positions || [])
+                        .filter(({ wind_speed }) => !! wind_speed)
+                        .map(({ moment, wind_speed }) => ({ moment, wind_speed }))
 
   const tabs = [];
 
