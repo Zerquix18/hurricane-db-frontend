@@ -56,12 +56,12 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
             <Popup
               on="click"
               position="left center"
-              trigger={<strong><a>... See more</a></strong>}
+              trigger={<strong><span style={{ color: 'lightblue' }}>... See more</span></strong>}
             >
               { hurricane.description }
               { hurricane.description_source && (
                 <div style={{ textAlign: 'right' }}>
-                  <a href={hurricane.description_source} target="_blank">
+                  <a href={hurricane.description_source} target="_blank" rel="noopener noreferrer">
                     Source&nbsp;
                     <Icon name="external alternate" size="small" />
                   </a>
