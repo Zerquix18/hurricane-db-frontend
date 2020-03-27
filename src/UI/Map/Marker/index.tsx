@@ -156,7 +156,6 @@ class MarkerComponent extends React.PureComponent<MarkerProps, MarkerState> {
     const icon = {
       url: `${url}#marker=${id}`,
       scaledSize: new window.google.maps.Size(size * (this.state.imgScale || 1) * scale!, size * scale!),
-      anchor: { x: 10, y: 10 }
     };
 
     const undoIcon = {
