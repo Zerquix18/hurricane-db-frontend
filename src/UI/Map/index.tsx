@@ -176,6 +176,8 @@ class MapComponent extends React.PureComponent<MapProps, MapState> {
       mapTexts,
     } = this.props;
 
+    console.log(markers);
+
     return (
       <MapContext.Provider value={this.state}>
         <GoogleMap

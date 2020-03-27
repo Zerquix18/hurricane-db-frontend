@@ -165,7 +165,7 @@ class MarkerComponent extends React.PureComponent<MarkerProps, MarkerState> {
       anchor: { x: 0, y: -5 }
     }
 
-    const visible = isVisible && restrictZoom && zoom >= 13;
+    const visible = isVisible;
 
     const showInfoWindow = this.state.infoWindowOpen || forceShowDescription;
 

@@ -1,4 +1,5 @@
 import { AppState } from 'models';
+import { positionsToMarkers } from 'utils';
 
 type ReducerAction = (
   'SET_ZOOM' |
@@ -66,6 +67,10 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
           ...state.mode,
           hurricane: action.hurricane,
           loading: false,
+        },
+        map: {
+          ...state.map,
+          markers: positionsToMarkers(action.hurricane.positions || []),
         }
       };
     case 'HURRICANE_MODE_SET_LOADING':

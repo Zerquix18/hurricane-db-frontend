@@ -8,6 +8,8 @@ const useMap = () => {
   return {
     zoom: state.map.zoom,
     center: state.map.center,
+    markers: state.map.markers,
+    polylines: state.map.polylines,
 
     setZoom: (zoom: number) => dispatch({ type: 'SET_ZOOM', zoom }),
     setCenter: (center: LatLng) => dispatch({ type: 'SET_CENTER', ...center })
