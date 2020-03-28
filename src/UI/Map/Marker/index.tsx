@@ -142,7 +142,6 @@ class MarkerComponent extends React.PureComponent<MarkerProps, MarkerState> {
       zoom,
       isVisible,
       forceShowDescription,
-      restrictZoom,
       scale,
     } = this.props;
 

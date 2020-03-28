@@ -1,5 +1,5 @@
 import React from 'react';
-import { HurricanePosition, Marker } from 'models';
+import { Marker, Hurricane } from 'models';
 import format from 'date-fns/format';
 import { getUserTimezone } from 'utils';
 
@@ -13,10 +13,16 @@ const icons = {
   category5: '/img/cat-5.png',
 };
 
-const positionsToMarkers = (positions: HurricanePosition[]): Marker[] => {
+const hurricaneIcon = '/img/hurricane-icon.png';
+
+const positionsToMarkers = (hurricane: Hurricane): Marker[] => {
   const markers: Marker[] = [];
+
+  if (hurricane.positions === null || hurricane.positions.length === 0) {
+    return markers;
+  }
   
-  positions.forEach(position => {
+  hurricane.positions.forEach(position => {
     const id = `position-${position.id}`;
     const lat = position.latitude;
     const lng = position.longitude;
@@ -65,6 +71,25 @@ const positionsToMarkers = (positions: HurricanePosition[]): Marker[] => {
     };
     markers.push(marker);
   });
+
+  const lastPosition = hurricane.positions[hurricane.positions.length - 1];
+
+  const defaultDescription = (
+    <>
+      <h3>{ hurricane.name }</h3>
+    </>
+  );
+
+  const hurricaneMarker: Marker = {
+    id: `hurricane-${hurricane.id}`,
+    lat: lastPosition.latitude,
+    lng: lastPosition.longitude,
+    url: hurricaneIcon,
+    defaultDescription,
+    scale: 2
+  };
+
+  markers.push(hurricaneMarker);
 
   return markers;
 }

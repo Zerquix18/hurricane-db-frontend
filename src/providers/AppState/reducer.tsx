@@ -70,7 +70,7 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
         },
         map: {
           ...state.map,
-          markers: positionsToMarkers(action.hurricane.positions || []),
+          markers: positionsToMarkers(action.hurricane),
           polylines: hurricanesToPolylines([action.hurricane]),
         }
       };
