@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import { Hurricane } from 'models';
-import { Button, Modal, Message, Tab } from 'semantic-ui-react';
+import { Button, Modal } from 'semantic-ui-react';
+import { Line } from 'react-chartjs-2';
+import chartOptions from './chartOptions';
 
 interface HurricaneChartsProps {
   hurricane: Hurricane;
 }
 
-const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
+const options = {
+  scales: {
+    xAxes: [{
+      type: 'time'
+    }]
+  }
+};
 
+const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
   const [modalOpen, changeModalOpen] = useState<boolean>(false);
 
   const toggleModal = () => {
@@ -16,38 +25,21 @@ const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
 
   const pressureData = (hurricane.positions || [])
                        .filter(({ pressure }) => !! pressure)
-                       .map(({ moment, pressure }) => ({ moment, pressure }))
+                       .map(({ moment, pressure }) => ({ t: new Date(moment), y: pressure }))
 
   const windSpeedData = (hurricane.positions || [])
                         .filter(({ wind_speed }) => !! wind_speed)
-                        .map(({ moment, wind_speed }) => ({ moment, wind_speed }))
+                        .map(({ moment, wind_speed }) => ({ t: new Date(moment), y: wind_speed }))
 
-  const tabs = [];
-
-  if (pressureData.length > 0) {
-    tabs.push({ menuItem: 'Pressure in time', render: () => 'I will render the pressure in time' });
-  }
-  if (windSpeedData.length > 0) {
-    tabs.push({ menuItem: 'Wind Speed in time', render: () => 'I will render the wind speed in time' });
-  }
+  const data = chartOptions(pressureData, windSpeedData);
 
   return (
     <>
       <Button color="blue" icon="chart bar" content="Charts" onClick={toggleModal} />
       <Modal open={modalOpen} onClose={toggleModal} size="small" closeIcon>
-        <Modal.Header>{ hurricane.name }'s charts</Modal.Header>
+        <Modal.Header>{ hurricane.name }'s chart</Modal.Header>
         <Modal.Content>
-          { tabs.length === 0 && (
-            <Message color="yellow">
-              <Message.Header>No charts to display.</Message.Header>
-              <Message.Content>
-                Sorry, we don't have enough data for this hurricane.
-              </Message.Content>
-            </Message>
-          )}
-          { tabs.length > 0 && (
-            <Tab panes={tabs} />
-          )}
+          <Line data={data} options={options} />
         </Modal.Content>
         <Modal.Actions>
           <Button color="blue" content="Close" onClick={toggleModal} />
