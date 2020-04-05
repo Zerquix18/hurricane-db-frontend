@@ -54,7 +54,7 @@ const positionsToMarkers = (hurricane: Hurricane): Marker[] => {
 
     const defaultDescription = (
       <div>
-        <strong>Date: </strong>{ format(new Date(position.moment), 'MMMM L, yyyy')}<br />
+        <strong>Date: </strong>{ format(new Date(position.moment), 'MMMM d, yyyy')}<br />
         <strong>Time: </strong>{ format(new Date(position.moment), 'HH:kk ') } { getUserTimezone() }<br />
         <strong>Classification: </strong>{ classification } <br />
         <strong>Wind Speed: </strong> { position.wind_speed } kt<br />
