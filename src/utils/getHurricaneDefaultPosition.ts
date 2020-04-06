@@ -25,7 +25,7 @@ const getHurricaneDefaultPosition = (positions: HurricanePosition[]): Position =
     lng: boundsCenter.lng(),
   };
 
-  const WORLD_DIM = { height: 256, width: 256 };
+  const WORLD_DIM = { height: 200, width: 200 };
   const mapDim = document.getElementById('hurricane-db-map')!.getBoundingClientRect();
 
   const latRad = (lat: number) => {
