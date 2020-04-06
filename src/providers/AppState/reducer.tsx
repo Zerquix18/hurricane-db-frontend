@@ -12,7 +12,9 @@ type ReducerAction = (
   'SET_MODE_HURRICANE' |
   'HURRICANE_MODE_SET_HURRICANE' |
   'HURRICANE_MODE_SET_LOADING' |
-  'HURRICANE_MODE_SET_ERROR'
+  'HURRICANE_MODE_SET_ERROR' |
+
+  'SETTINGS_SET_UNITS'
 
   // ..
 )
@@ -105,6 +107,17 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
           error: action.error,
         }
       };
+    case 'SETTINGS_SET_UNITS':
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          units: {
+            ...state.settings.units,
+            ...action.payload
+          }
+        }
+      }
     
     default:
       throw new Error("This will never happen hahaha (i hope pls)")

@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Menu, Container, Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
+import SettingsModal from './SettingsModal';
 
 const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const goTo = (route: string): void => {
     history.push(route);
   };
+  const toggleSettings = () => {
+    setSettingsModalOpen(! settingsModalOpen);
+  }
 
   const { location: { pathname } } = history;
 
@@ -24,6 +29,14 @@ const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
           <Image src={temporaryLogo} style={logoStyle} />
           Home
         </Menu.Item>
+        
+        <Menu.Menu position="right">
+          <Menu.Item icon="cog" content="Settings" onClick={toggleSettings} />
+        </Menu.Menu>
+
+        { settingsModalOpen && (
+          <SettingsModal onClose={toggleSettings} />
+        )}
       </Container>
     </Menu>
   );
