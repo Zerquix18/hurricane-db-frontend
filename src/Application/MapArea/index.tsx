@@ -17,14 +17,16 @@ const MapArea: React.FC = () => {
   }
 
   return (
-    <GoogleMap
-      mapTypeId="satellite"
-      center={center}
-      zoom={zoom}
-      markers={markers}
-      polylines={polylines}
-      controls={controls}
-    />
+    <div id="hurricane-db-map">
+      <GoogleMap
+        mapTypeId="satellite"
+        center={center}
+        zoom={zoom}
+        markers={markers}
+        polylines={polylines}
+        controls={controls}
+      />
+    </div>
   );
 };
 

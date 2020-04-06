@@ -1,5 +1,5 @@
 import { AppState } from 'models';
-import { positionsToMarkers, hurricanesToPolylines } from 'utils';
+import { positionsToMarkers, hurricanesToPolylines, getHurricaneDefaultPosition } from 'utils';
 
 type ReducerAction = (
   'SET_ZOOM' |
@@ -72,6 +72,14 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
       if (state.mode.mode !== 'hurricane') {
         return state;
       }
+      const positions = action.hurricane.positions
+      let center = state.map.center
+      let zoom = state.map.zoom
+      if (positions) {
+        const position = getHurricaneDefaultPosition(positions);
+        center = position.center
+        zoom = position.zoom
+      }
       return {
         ...state,
         mode: {
@@ -83,6 +91,8 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
           ...state.map,
           markers: positionsToMarkers(action.hurricane),
           polylines: hurricanesToPolylines([action.hurricane]),
+          center,
+          zoom,
         }
       };
     case 'HURRICANE_MODE_SET_LOADING':

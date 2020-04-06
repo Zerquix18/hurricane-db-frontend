@@ -4,6 +4,7 @@ import positionsToMarkers from './positionsToMarkers';
 import hurricanesToPolylines from './hurricanesToPolylines';
 import getUserTimezone from './getUserTimezone';
 import calculateHurricanePosition from './calculateHurricanePosition';
+import getHurricaneDefaultPosition from './getHurricaneDefaultPosition';
 
 export {
   translateBasin,
@@ -12,4 +13,5 @@ export {
   hurricanesToPolylines,
   getUserTimezone,
   calculateHurricanePosition,
+  getHurricaneDefaultPosition,
 }

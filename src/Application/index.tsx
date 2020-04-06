@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import MapArea from './MapArea';
 import { fetchHurricane } from 'api';
-import { useMode } from 'hooks';
+import { useMode, useMap } from 'hooks';
 
 const Application: React.FC = () => {
   const hurricaneMode = useRouteMatch({ path: '/:basin/:season/:name', strict: true });
@@ -38,7 +38,7 @@ const Application: React.FC = () => {
             <Sidebar />
           </Grid.Column>
           <Grid.Column computer={12}>
-          <MapArea />
+            <MapArea />
           </Grid.Column>
         </Grid>
       </div>
