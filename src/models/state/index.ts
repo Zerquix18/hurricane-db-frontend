@@ -1,9 +1,7 @@
 import { LatLng, Marker, Polyline } from 'models';
 import { Hurricane } from 'models/database';
 
-// export type AppMode = 'rankings' | 'search' | 'season' | 'hurricane' | null;
-
-interface AppModeNone {
+export interface AppModeNone {
   mode: null;
 }
 
@@ -26,18 +24,29 @@ export interface AppModeSeason {
   error: string;
 }
 
-type AppMode = AppModeNone | AppModeHurricane | AppModeSeason;
+export type AppMode = AppModeNone | AppModeHurricane | AppModeSeason;
 
-class AppMapState {
+export interface AppMapState {
   center: LatLng;
   zoom: number;
   markers: Marker[];
   polylines: Polyline[];
 }
 
-class AppState {
-  mode: AppMode;
-  map: AppMapState;
+export type SpeedUnit = 'kt' | 'kmh' | 'mph';
+export type PressureUnit = 'mb' | 'kpa' | 'atm';
+export type DistanceUnit = 'km' | 'mi' | 'm';
+
+export interface AppSettingsState {
+  units: {
+    speed: SpeedUnit;
+    pressure: PressureUnit;
+    distance: DistanceUnit;
+  }
 }
 
-export { AppState, AppMapState }
+export interface AppState {
+  mode: AppMode;
+  map: AppMapState;
+  settings: AppSettingsState;
+}

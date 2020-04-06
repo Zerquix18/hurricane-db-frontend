@@ -3,6 +3,8 @@ import { Hurricane } from 'models';
 import { Button, Modal } from 'semantic-ui-react';
 import { Line } from 'react-chartjs-2';
 import chartOptions from './chartOptions';
+import { useSettings } from 'hooks';
+import translateUnit from 'utils/translateUnit';
 
 interface HurricaneChartsProps {
   hurricane: Hurricane;
@@ -18,6 +20,7 @@ const options = {
 
 const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
   const [modalOpen, changeModalOpen] = useState<boolean>(false);
+  const settings = useSettings();
 
   const toggleModal = () => {
     changeModalOpen(! modalOpen);
@@ -25,11 +28,17 @@ const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
 
   const pressureData = (hurricane.positions || [])
                        .filter(({ pressure }) => !! pressure)
-                       .map(({ moment, pressure }) => ({ t: new Date(moment), y: pressure }))
+                       .map(({ moment, pressure }) => ({
+                          t: new Date(moment),
+                          y: translateUnit({ type: 'pressure', to: settings.units.pressure, value: pressure })
+                        }))
 
   const windSpeedData = (hurricane.positions || [])
                         .filter(({ wind_speed }) => !! wind_speed)
-                        .map(({ moment, wind_speed }) => ({ t: new Date(moment), y: wind_speed }))
+                        .map(({ moment, wind_speed }) => ({
+                          t: new Date(moment),
+                          y: translateUnit({ type: 'speed', to: settings.units.speed, value: wind_speed }),
+                        }))
 
   const data = chartOptions(pressureData, windSpeedData);
 

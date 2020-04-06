@@ -1,7 +1,9 @@
 import React from 'react';
-import { Marker, Hurricane } from 'models';
+import { Marker, Hurricane, HurricanePosition } from 'models';
 import format from 'date-fns/format';
 import { getUserTimezone } from 'utils';
+import { useSettings } from 'hooks';
+import translateUnit from './translateUnit';
 
 const icons = {
   tropicalDepression: '/img/trop-depression.png',
@@ -52,15 +54,7 @@ const positionsToMarkers = (hurricane: Hurricane): Marker[] => {
       classification = 'Tropical Depression';
     }
 
-    const defaultDescription = (
-      <div>
-        <strong>Date: </strong>{ format(new Date(position.moment), 'MMMM d, yyyy')}<br />
-        <strong>Time: </strong>{ format(new Date(position.moment), 'HH:kk ') } { getUserTimezone() }<br />
-        <strong>Classification: </strong>{ classification } <br />
-        <strong>Wind Speed: </strong> { position.wind_speed } kt<br />
-        <strong>Pressure: </strong> { position.pressure } mb
-      </div>
-    );
+    const defaultDescription = <PositionDescription position={position} classification={classification} />;
 
     const marker = {
       id,
@@ -92,6 +86,31 @@ const positionsToMarkers = (hurricane: Hurricane): Marker[] => {
   markers.push(hurricaneMarker);
 
   return markers;
+}
+
+interface PositionDescriptionProps {
+  position: HurricanePosition;
+  classification: string;
+}
+
+const PositionDescription: React.FC<PositionDescriptionProps> = ({ position, classification }) => {
+  const settings = useSettings();
+
+  const speedUnit = settings.units.speed;
+  const pressureUnit = settings.units.pressure;
+
+  const windSpeed = translateUnit({ type: 'speed', value: position.wind_speed, to: speedUnit });
+  const pressure = translateUnit({ type: 'pressure', value: position.pressure, to: pressureUnit });
+
+  return (
+      <div>
+        <strong>Date: </strong>{ format(new Date(position.moment), 'MMMM d, yyyy')}<br />
+        <strong>Time: </strong>{ format(new Date(position.moment), 'HH:kk ') } { getUserTimezone() }<br />
+        <strong>Classification: </strong>{ classification } <br />
+        <strong>Wind Speed: </strong> { windSpeed } { speedUnit }<br />
+        <strong>Pressure: </strong> { pressure } { pressureUnit }
+      </div>
+  )
 }
 
 export default positionsToMarkers;

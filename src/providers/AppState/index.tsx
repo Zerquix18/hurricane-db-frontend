@@ -16,6 +16,14 @@ const initialState: AppState = {
     markers: [],
     polylines: []
   },
+
+  settings: {
+    units: {
+      distance: 'km',
+      pressure: 'mb',
+      speed: 'kmh',
+    }
+  }
 }
 
 const defaultContextState = {
