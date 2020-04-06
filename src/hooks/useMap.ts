@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppStateContext } from 'providers';
-import { LatLng } from 'models';
+import { LatLng, Marker } from 'models';
 
 const useMap = () => {
   const { state, dispatch } = useContext(AppStateContext);
@@ -12,7 +12,9 @@ const useMap = () => {
     polylines: state.map.polylines,
 
     setZoom: (zoom: number) => dispatch({ type: 'SET_ZOOM', zoom }),
-    setCenter: (center: LatLng) => dispatch({ type: 'SET_CENTER', ...center })
+    setCenter: (center: LatLng) => dispatch({ type: 'SET_CENTER', ...center }),
+    setMarkers: (markers: Marker[]) => dispatch({ type: 'SET_MARKERS', markers }),
+    
   }
 }
 

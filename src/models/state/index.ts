@@ -15,7 +15,7 @@ export interface AppModeHurricane {
   error: string;
 }
 
-interface AppModeSeason {
+export interface AppModeSeason {
   mode: 'season';
 
   hurricanes: Hurricane[] | null;

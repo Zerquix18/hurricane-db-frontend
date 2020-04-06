@@ -4,6 +4,7 @@ import { positionsToMarkers, hurricanesToPolylines } from 'utils';
 type ReducerAction = (
   'SET_ZOOM' |
   'SET_CENTER' |
+  'SET_MARKERS' |
 
   // Set modes
   'SET_MODE_NONE' |
@@ -43,6 +44,14 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
         map: {
           ...state.map,
           zoom: action.zoom,
+        }
+      };
+    case 'SET_MARKERS':
+      return {
+        ...state,
+        map: {
+          ...state.map,
+          markers: action.markers,
         }
       };
     
