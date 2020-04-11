@@ -14,8 +14,6 @@ export class MarkerState {
 }
 
 interface MarkerProps extends MarkerModel {
-  zoom: number,
-  map: any,
 }
 
 export const MarkerContext = React.createContext<MarkerState|null>(null);
@@ -137,24 +135,16 @@ class MarkerComponent extends React.PureComponent<MarkerProps, MarkerState> {
       label,
       defaultDescription,
       description,
-      map,
       draggable,
-      zoom,
       isVisible,
       forceShowDescription,
-      scale,
     } = this.props;
 
-    if (! map.loaded) {
-      return '';
-    }
-
     const position = { lat, lng };
-    const size = Math.round(((zoom * 25) / 17) * 1.1); // i created this formula
 
     const icon = {
       url: `${url}#marker=${id}`,
-      scaledSize: new window.google.maps.Size(size * (this.state.imgScale || 1) * scale!, size * scale!),
+      scaledSize: new window.google.maps.Size(8, 8),
     };
 
     const undoIcon = {
@@ -212,8 +202,4 @@ class MarkerComponent extends React.PureComponent<MarkerProps, MarkerState> {
   }
 }
 
-//export default MarkerComponent;
-export default (props: any) => {
-  const map = useContext(MapContext);
-  return <MarkerComponent {...props} map={map} />;
-};
+export default MarkerComponent;

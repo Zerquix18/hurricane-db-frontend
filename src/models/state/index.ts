@@ -1,5 +1,5 @@
 import { LatLng, Marker, Polyline } from 'models';
-import { Hurricane } from 'models/database';
+import { Hurricane, Season } from 'models/database';
 
 export interface AppModeNone {
   mode: null;
@@ -8,19 +8,14 @@ export interface AppModeNone {
 export interface AppModeHurricane {
   mode: 'hurricane';
   hurricane: Hurricane | null;
-
   loading: boolean;
   error: string;
 }
 
 export interface AppModeSeason {
   mode: 'season';
-
-  hurricanes: Hurricane[] | null;
-  loadedSeason: boolean;
-  loadedPositions: boolean;
-  loadedWindSpeeds: boolean;
-
+  season: Season | null;
+  loading: boolean;
   error: string;
 }
 

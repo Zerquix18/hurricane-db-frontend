@@ -4,8 +4,8 @@ import { useRouteMatch, useHistory } from 'react-router';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import MapArea from './MapArea';
-import { fetchHurricane } from 'api';
-import { useMode, useMap } from 'hooks';
+import { fetchHurricane, fetchSeason } from 'api';
+import { useMode } from 'hooks';
 
 const Application: React.FC = () => {
   const hurricaneMode = useRouteMatch({ path: '/:basin/:season/:name', strict: true });
@@ -20,6 +20,13 @@ const Application: React.FC = () => {
       const { basin, season, name } = hurricaneMode.params as any; // how come you have {}
       mode.setHurricaneMode();
       fetchHurricane(basin, season, name).then(mode.setHurricane).catch(console.log);
+      return;
+    }
+
+    if (seasonMode) {
+      const { basin, year } = seasonMode.params as any;
+      mode.setSeasonMode();
+      fetchSeason(basin, year).then(mode.setSeason).catch(console.log);
       return;
     }
 

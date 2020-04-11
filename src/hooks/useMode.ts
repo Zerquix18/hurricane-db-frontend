@@ -1,12 +1,6 @@
 import { useContext } from 'react';
 import { AppStateContext } from 'providers';
-import { Hurricane } from 'models';
-
-type HurricaneLoaders = {
-  loadedHurricane?: boolean;
-  loadedPositions?: boolean;
-  loadedWindspeeds?: boolean;
-}
+import { Hurricane, Season } from 'models';
 
 const useMode = () => {
   const { state, dispatch } = useContext(AppStateContext);
@@ -17,9 +11,9 @@ const useMode = () => {
 
     setHurricaneMode: () => dispatch({ type: 'SET_MODE_HURRICANE' }),
     setHurricane: (hurricane: Hurricane) => dispatch({ type: 'HURRICANE_MODE_SET_HURRICANE', hurricane }),
-    setHurricaneLoading: (hurricaneLoaders: HurricaneLoaders) => dispatch({ type: 'HURRICANE_MODE_SET_LOADING', ...hurricaneLoaders }),
-    setHurricaneError: (error: string) => dispatch({ type: 'HURRICANE_MODE_SET_ERROR', error }),
     
+    setSeasonMode: () => dispatch({ type: 'SET_MODE_SEASON' }),
+    setSeason: (season: Season) => dispatch({ type: 'SEASON_MODE_SET_SEASON', season }),
   }
 }
 

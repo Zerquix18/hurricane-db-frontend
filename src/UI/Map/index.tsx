@@ -209,17 +209,17 @@ class MapComponent extends React.PureComponent<MapProps, MapState> {
                   ignoreHidden={true}
                   maxZoom={19}>
                   {(markers || []).filter((marker) => marker.aggregated).map((marker, index) => (
-                    <MarkerComponent {...marker} key={index} zoom={this.state.zoom!} />
+                    <MarkerComponent {...marker} key={index} />
                   ))}
                 </MarkerClusterer>
 
               {(markers || []).filter((marker) => ! marker.aggregated).map((marker, index) => (
-                  <MarkerComponent {...marker} key={index} zoom={this.state.zoom!} />
+                  <MarkerComponent {...marker} key={index} />
                 ))
               }
             </>
           ) : (markers || []).map((marker, index) => (
-            <MarkerComponent {...marker} key={index} zoom={this.state.zoom!} />
+            <MarkerComponent {...marker} key={index} />
             )
           )}
 

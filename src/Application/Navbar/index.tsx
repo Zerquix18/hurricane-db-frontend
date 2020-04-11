@@ -3,15 +3,21 @@ import { Menu, Container, Image } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import SettingsModal from './SettingsModal';
+import SeasonModal from './SeasonModal';
 
 const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
+  const [seasonModalOpen, setSeasonModalOpen] = useState(false);
+
   const goTo = (route: string): void => {
     history.push(route);
   };
   const toggleSettings = () => {
     setSettingsModalOpen(! settingsModalOpen);
-  }
+  };
+  const toggleSeasons = () => {
+    setSeasonModalOpen(! seasonModalOpen);
+  };
 
   const { location: { pathname } } = history;
 
@@ -29,6 +35,9 @@ const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
           <Image src={temporaryLogo} style={logoStyle} />
           Home
         </Menu.Item>
+        <Menu.Item onClick={toggleSeasons}>
+          Seasons
+        </Menu.Item>
         
         <Menu.Menu position="right">
           <Menu.Item icon="cog" content="Settings" onClick={toggleSettings} />
@@ -36,6 +45,9 @@ const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
 
         { settingsModalOpen && (
           <SettingsModal onClose={toggleSettings} />
+        )}
+        { seasonModalOpen && (
+          <SeasonModal onClose={toggleSeasons} />
         )}
       </Container>
     </Menu>

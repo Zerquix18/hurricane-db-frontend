@@ -1,4 +1,4 @@
-import { AppState } from 'models';
+import { AppState, Season } from 'models';
 import { positionsToMarkers, hurricanesToPolylines, getHurricaneDefaultPosition } from 'utils';
 
 type ReducerAction = (
@@ -13,6 +13,12 @@ type ReducerAction = (
   'HURRICANE_MODE_SET_HURRICANE' |
   'HURRICANE_MODE_SET_LOADING' |
   'HURRICANE_MODE_SET_ERROR' |
+
+  'SET_MODE_SEASON' |
+  'SEASON_MODE_SET_SEASON' |
+  'SEASON_MODE_SET_LOADING' |
+  'SEASON_MODE_SET_ERROR' |
+
 
   'SETTINGS_SET_UNITS'
 
@@ -68,7 +74,7 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
         }
       };
 
-    case 'HURRICANE_MODE_SET_HURRICANE':
+    case 'HURRICANE_MODE_SET_HURRICANE': {
       if (state.mode.mode !== 'hurricane') {
         return state;
       }
@@ -89,13 +95,14 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
         },
         map: {
           ...state.map,
-          markers: positionsToMarkers(action.hurricane),
+          markers: positionsToMarkers([action.hurricane]),
           polylines: hurricanesToPolylines([action.hurricane]),
           center,
           zoom,
         }
       };
-    case 'HURRICANE_MODE_SET_LOADING':
+    }
+    case 'HURRICANE_MODE_SET_LOADING': {
       if (state.mode.mode !== 'hurricane') {
         return state;
       }
@@ -106,6 +113,7 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
           ...action.loading,
         }
       };
+    }
     case 'HURRICANE_MODE_SET_ERROR':
       if (state.mode.mode !== 'hurricane') {
         return state;
@@ -117,6 +125,71 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
           error: action.error,
         }
       };
+
+      case 'SET_MODE_SEASON':
+        return {
+          ...state,
+          mode: {
+            mode: 'season',
+            season: null,
+            loading: true,
+            error: '',
+          }
+        };
+  
+      case 'SEASON_MODE_SET_SEASON':
+        if (state.mode.mode !== 'season') {
+          return state;
+        }
+        const season = action.season as Season;
+        const hurricanes = season.systems || [];
+        const positions = hurricanes.map(system => {
+          return system.positions || [];
+        }).flat();
+
+        let center = state.map.center
+        let zoom = state.map.zoom
+        if (positions) {
+          const position = getHurricaneDefaultPosition(positions);
+          center = position.center
+          zoom = position.zoom
+        }
+
+        return {
+          ...state,
+          mode: {
+            ...state.mode,
+            season: action.season,
+            loading: false,
+          },
+          map: {
+            ...state.map,
+            markers: positionsToMarkers(hurricanes),
+            polylines: hurricanesToPolylines(hurricanes),
+            center,
+            zoom,
+          }
+        };
+      case 'SEASON_MODE_SET_LOADING':
+        return {
+          ...state,
+          mode: {
+            ...state.mode,
+            ...action.loading,
+          }
+        };
+      case 'SEASON_MODE_SET_ERROR':
+        if (state.mode.mode !== 'season') {
+          return state;
+        }
+        return {
+          ...state,
+          mode: {
+            ...state.mode,
+            error: action.error,
+          }
+        };
+
     case 'SETTINGS_SET_UNITS':
       return {
         ...state,

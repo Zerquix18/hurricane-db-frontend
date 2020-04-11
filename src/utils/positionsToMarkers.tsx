@@ -17,73 +17,75 @@ const icons = {
 
 const hurricaneIcon = '/img/hurricane-icon.png';
 
-const positionsToMarkers = (hurricane: Hurricane): Marker[] => {
+const positionsToMarkers = (hurricanes: Hurricane[]): Marker[] => {
   const markers: Marker[] = [];
 
-  if (hurricane.positions === null || hurricane.positions.length === 0) {
-    return markers;
-  }
-  
-  hurricane.positions.forEach(position => {
-    const id = `position-${position.id}`;
-    const lat = position.latitude;
-    const lng = position.longitude;
-    let url, classification
-
-    // kt!
-    if (position.wind_speed > 134) {
-      url = icons.category5;
-      classification = 'Category 5 hurricane';
-    } else if (position.wind_speed > 114) {
-      url = icons.category4;
-      classification = 'Category 4 hurricane';
-    } else if (position.wind_speed > 96) {
-      url = icons.category3;
-      classification = 'Category 3 hurricane';
-    } else if (position.wind_speed > 83) {
-      url = icons.category2;
-      classification = 'Category 2 hurricane';
-    } else if (position.wind_speed > 64) {
-      url = icons.category1;
-      classification = 'Category 1 hurricane';
-    } else if (position.wind_speed > 35) {
-      url = icons.tropicalStorm;
-      classification = 'Tropical Storm';
-    } else {
-      url = icons.tropicalDepression;
-      classification = 'Tropical Depression';
+  hurricanes.forEach(hurricane => {
+    if (hurricane.positions === null || hurricane.positions.length === 0) {
+      return;
     }
 
-    const defaultDescription = <PositionDescription position={position} classification={classification} />;
-
-    const marker = {
-      id,
-      lat,
-      lng,
-      url,
+    hurricane.positions.forEach(position => {
+      const id = `position-${position.id}`;
+      const lat = position.latitude;
+      const lng = position.longitude;
+      let url, classification
+  
+      // kt!
+      if (position.wind_speed > 134) {
+        url = icons.category5;
+        classification = 'Category 5 hurricane';
+      } else if (position.wind_speed > 114) {
+        url = icons.category4;
+        classification = 'Category 4 hurricane';
+      } else if (position.wind_speed > 96) {
+        url = icons.category3;
+        classification = 'Category 3 hurricane';
+      } else if (position.wind_speed > 83) {
+        url = icons.category2;
+        classification = 'Category 2 hurricane';
+      } else if (position.wind_speed > 64) {
+        url = icons.category1;
+        classification = 'Category 1 hurricane';
+      } else if (position.wind_speed > 35) {
+        url = icons.tropicalStorm;
+        classification = 'Tropical Storm';
+      } else {
+        url = icons.tropicalDepression;
+        classification = 'Tropical Depression';
+      }
+  
+      const defaultDescription = <PositionDescription position={position} classification={classification} />;
+  
+      const marker = {
+        id,
+        lat,
+        lng,
+        url,
+        defaultDescription,
+      };
+      markers.push(marker);
+    });
+  
+    const lastPosition = hurricane.positions[hurricane.positions.length - 1];
+  
+    const defaultDescription = (
+      <>
+        <h3>{ hurricane.name }</h3>
+      </>
+    );
+  
+    const hurricaneMarker: Marker = {
+      id: `hurricane-${hurricane.id}`,
+      lat: lastPosition.latitude,
+      lng: lastPosition.longitude,
+      url: hurricaneIcon,
       defaultDescription,
+      scale: 2
     };
-    markers.push(marker);
+  
+    markers.push(hurricaneMarker);
   });
-
-  const lastPosition = hurricane.positions[hurricane.positions.length - 1];
-
-  const defaultDescription = (
-    <>
-      <h3>{ hurricane.name }</h3>
-    </>
-  );
-
-  const hurricaneMarker: Marker = {
-    id: `hurricane-${hurricane.id}`,
-    lat: lastPosition.latitude,
-    lng: lastPosition.longitude,
-    url: hurricaneIcon,
-    defaultDescription,
-    scale: 2
-  };
-
-  markers.push(hurricaneMarker);
 
   return markers;
 }
