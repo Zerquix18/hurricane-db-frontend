@@ -26,7 +26,7 @@ const positionsToMarkers = (hurricanes: Hurricane[]): Marker[] => {
     }
 
     hurricane.positions.forEach(position => {
-      const id = `position-${position.id}`;
+      const id = `hurricane-${hurricane.id}-position-${position.id}`;
       const lat = position.latitude;
       const lng = position.longitude;
       let url, classification
@@ -63,6 +63,7 @@ const positionsToMarkers = (hurricanes: Hurricane[]): Marker[] => {
         lng,
         url,
         defaultDescription,
+        reference: position,
       };
       markers.push(marker);
     });

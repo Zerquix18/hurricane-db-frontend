@@ -5,6 +5,7 @@ type ReducerAction = (
   'SET_ZOOM' |
   'SET_CENTER' |
   'SET_MARKERS' |
+  'SET_POLYLINES' |
 
   // Set modes
   'SET_MODE_NONE' |
@@ -60,6 +61,14 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
         map: {
           ...state.map,
           markers: action.markers,
+        }
+      };
+    case 'SET_POLYLINES':
+      return {
+        ...state,
+        map: {
+          ...state.map,
+          polylines: action.polylines,
         }
       };
     

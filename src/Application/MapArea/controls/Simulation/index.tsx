@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Message, Divider, Grid, Icon, Button, Header } from 'semantic-ui-react';
-import { Hurricane } from 'models';
+import { Hurricane, HurricanePosition } from 'models';
 import format from 'date-fns/format';
 import { useMap } from 'hooks';
-import { calculateHurricanePosition } from 'utils';
+import { calculateHurricanePath } from 'utils';
 
 interface SimulationProps {
   hurricanes: Hurricane[];
@@ -57,15 +57,34 @@ const Simulation: React.FC<SimulationProps> = ({ hurricanes }) => {
         return;
       }
       const markerId = `hurricane-${hurricane.id}`;
-      const position = calculateHurricanePosition(hurricane.positions, untilDate);
+      const polylineId = `hurricane-${hurricane.id}`;
+
+      const path = calculateHurricanePath(hurricane.positions, untilDate);
+      const position = path[path.length - 1];
       const { lat, lng } = position;
+      const isVisible = ! (hurricane.positions[0].latitude === lat && hurricane.positions[0].longitude === lng);
       const markers = [...map.markers].map(marker => {
-        if (marker.id !== markerId) {
-          return marker;
-        };
-        return { ...marker, lat, lng };
+        if (marker.id === markerId) {
+          return { ...marker, lat, lng, isVisible };
+        }
+
+        if (marker.id.startsWith(`hurricane-${hurricane.id}-position-`)) {
+          const reference = marker.reference as HurricanePosition;
+          const date = new Date(reference.moment);
+          const isVisible = date.getTime() < untilDate.getTime();
+          return { ...marker, isVisible };
+        }
+        
+        return marker;
+      });
+      const polylines = [...map.polylines].map(polyline => {
+        if (polyline.id !== polylineId) {
+          return polyline;
+        }
+        return { ...polyline, path };
       });
       map.setMarkers(markers);
+      map.setPolylines(polylines);
     });
   };
 

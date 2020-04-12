@@ -3,7 +3,7 @@ import formatNumber from './formatNumber';
 import positionsToMarkers from './positionsToMarkers';
 import hurricanesToPolylines from './hurricanesToPolylines';
 import getUserTimezone from './getUserTimezone';
-import calculateHurricanePosition from './calculateHurricanePosition';
+import calculateHurricanePath from './calculateHurricanePath';
 import getHurricaneDefaultPosition from './getHurricaneDefaultPosition';
 
 export {
@@ -12,6 +12,6 @@ export {
   positionsToMarkers,
   hurricanesToPolylines,
   getUserTimezone,
-  calculateHurricanePosition,
+  calculateHurricanePath,
   getHurricaneDefaultPosition,
 }

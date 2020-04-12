@@ -2,7 +2,7 @@ import { LatLng, HurricanePosition } from 'models';
 
 declare var window: any;
 
-const calculateHurricanePosition = (positions: HurricanePosition[], date: Date): LatLng => {
+const calculateHurricanePath = (positions: HurricanePosition[], date: Date): LatLng[] => {
   const currentTimestamp = date.getTime();
 
   const progress = positions.filter(position => {
@@ -12,7 +12,7 @@ const calculateHurricanePosition = (positions: HurricanePosition[], date: Date):
 
   if (progress.length === 0) {
     const { latitude: lat, longitude: lng } = positions[0];
-    return { lat, lng };
+    return [{ lat, lng }];
   }
 
   const lastPoint = progress[progress.length - 1];
@@ -20,7 +20,7 @@ const calculateHurricanePosition = (positions: HurricanePosition[], date: Date):
 
   if (! nextPoint) {
     const { latitude: lat, longitude: lng } = positions[progress.length - 1];
-    return { lat, lng };
+    return [{ lat, lng }];
   }
 
   const lastPointTime = new Date(lastPoint.moment).getTime();
@@ -37,7 +37,10 @@ const calculateHurricanePosition = (positions: HurricanePosition[], date: Date):
   const lat = position.lat();
   const lng = position.lng();
 
-  return { lat, lng };
+  const path = progress.map(({ latitude: lat, longitude: lng }) => ({ lat, lng }))
+                       .concat({ lat, lng });
+
+  return path;
 };
 
-export default calculateHurricanePosition;
+export default calculateHurricanePath;
