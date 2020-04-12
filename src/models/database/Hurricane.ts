@@ -1,6 +1,6 @@
 import { HurricanePosition, HurricaneWindSpeed, HurricanePressure, HurricaneAffectedArea } from 'models';
 
-type Basin = 'atlantic' | 'eatern_pacific' | 'western_pacific' | 'southern_pacific' | 'indian' | 'australian_region';
+export type Basin = 'atlantic' | 'eatern_pacific' | 'western_pacific' | 'southern_pacific' | 'indian' | 'australian_region';
 
 class Hurricane {
   id: number;

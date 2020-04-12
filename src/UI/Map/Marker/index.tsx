@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Marker as MarkerModel, LatLng } from '../../../models';
 import { Marker, InfoWindow } from 'react-google-maps';
-import { MapContext } from '../../../providers';
 
 declare var window: any;
 
