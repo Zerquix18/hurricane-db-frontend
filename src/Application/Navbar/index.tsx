@@ -4,10 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import SettingsModal from './SettingsModal';
 import SeasonModal from './SeasonModal';
+import RankingModal from './RankingsModal';
 
 const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [seasonModalOpen, setSeasonModalOpen] = useState(false);
+  const [rankingModalOpen, setRankingModalOpen] = useState(false);
 
   const goTo = (route: string): void => {
     history.push(route);
@@ -17,6 +19,9 @@ const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
   };
   const toggleSeasons = () => {
     setSeasonModalOpen(! seasonModalOpen);
+  };
+  const toggleRankings = () => {
+    setRankingModalOpen(! rankingModalOpen);
   };
 
   const { location: { pathname } } = history;
@@ -38,6 +43,9 @@ const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
         <Menu.Item onClick={toggleSeasons}>
           Seasons
         </Menu.Item>
+        <Menu.Item onClick={toggleRankings}>
+          Rankings
+        </Menu.Item>
         
         <Menu.Menu position="right">
           <Menu.Item icon="cog" content="Settings" onClick={toggleSettings} />
@@ -48,6 +56,9 @@ const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
         )}
         { seasonModalOpen && (
           <SeasonModal onClose={toggleSeasons} />
+        )}
+        { rankingModalOpen && (
+          <RankingModal onClose={toggleRankings} />
         )}
       </Container>
     </Menu>
