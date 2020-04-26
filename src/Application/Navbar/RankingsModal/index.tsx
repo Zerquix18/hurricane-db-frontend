@@ -9,6 +9,7 @@ import Month from './Month';
 import Seasons from './Seasons';
 import FastestMovement from './FastestMovement';
 import LargestPath from './LargestPath';
+import FormationByCategory from './FormationByCategory';
 
 interface RankingItem {
   title: string;
@@ -51,6 +52,14 @@ const rankings: RankingItem[] = [
   {
     title: 'Longest distance traveled',
     Component: <LargestPath />
+  },
+  {
+    title: 'Earliest formation by category',
+    Component: <FormationByCategory type="earliest" />
+  },
+  {
+    title: 'Latest formation by category',
+    Component: <FormationByCategory type="latest" />
   }
 ];
 

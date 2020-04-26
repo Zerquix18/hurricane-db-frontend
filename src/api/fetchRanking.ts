@@ -8,7 +8,7 @@ type Ranking = (
   'top_by_fastest_movement' |
   'top_by_largest_path' |
   'top_by_landfalls' |
-  'earlier_formation_by_category' |
+  'earliest_formation_by_category' |
   'latest_formation_by_category'
 );
 
