@@ -7,6 +7,7 @@ import Fatalities from './Fatalities';
 import Damage from './Damage';
 import Month from './Month';
 import Seasons from './Seasons';
+import FastestMovement from './FastestMovement';
 
 interface RankingItem {
   title: string;
@@ -41,6 +42,10 @@ const rankings: RankingItem[] = [
   {
     title: 'Top by season total',
     Component: <Seasons />,
+  },
+  {
+    title: 'Fastest movement by land',
+    Component: <FastestMovement />
   }
 ];
 
