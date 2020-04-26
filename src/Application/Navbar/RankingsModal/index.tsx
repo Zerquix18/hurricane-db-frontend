@@ -8,6 +8,7 @@ import Damage from './Damage';
 import Month from './Month';
 import Seasons from './Seasons';
 import FastestMovement from './FastestMovement';
+import LargestPath from './LargestPath';
 
 interface RankingItem {
   title: string;
@@ -46,6 +47,10 @@ const rankings: RankingItem[] = [
   {
     title: 'Fastest movement by land',
     Component: <FastestMovement />
+  },
+  {
+    title: 'Longest distance traveled',
+    Component: <LargestPath />
   }
 ];
 
