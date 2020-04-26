@@ -4,6 +4,7 @@ import { Modal, Button, Accordion, Icon } from 'semantic-ui-react';
 import LowestPressure from './LowestPressure';
 import HighestWindSpeed from './HighestWindSpeed';
 import Fatalities from './Fatalities';
+import Damage from './Damage';
 
 interface RankingItem {
   title: string;
@@ -24,8 +25,12 @@ const rankings: RankingItem[] = [
     Component: <HighestWindSpeed />,
   },
   {
-    title: 'Fatalities',
+    title: 'Top by fatalities',
     Component: <Fatalities />,
+  },
+  {
+    title: 'Top by economical damage',
+    Component: <Damage />,
   }
 ];
 
