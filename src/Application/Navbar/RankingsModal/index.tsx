@@ -6,6 +6,7 @@ import HighestWindSpeed from './HighestWindSpeed';
 import Fatalities from './Fatalities';
 import Damage from './Damage';
 import Month from './Month';
+import Seasons from './Seasons';
 
 interface RankingItem {
   title: string;
@@ -36,6 +37,10 @@ const rankings: RankingItem[] = [
   {
     title: 'Top by month',
     Component: <Month />,
+  },
+  {
+    title: 'Top by season total',
+    Component: <Seasons />,
   }
 ];
 
