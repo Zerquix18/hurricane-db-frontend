@@ -10,14 +10,12 @@ import { useMode } from 'hooks';
 const Application: React.FC = () => {
   const hurricaneMode = useRouteMatch({ path: '/:basin/:season/:name', strict: true });
   const seasonMode = useRouteMatch({ path: '/:basin/:year', strict: true });
-  const rankingMode = useRouteMatch({ path: '/ranking/:ranking', strict: true, });
-  const searchMode = useRouteMatch({ path: '/search', strict: true });
   const history = useHistory();
   const mode = useMode();
 
   const setMode = () => {
     if (hurricaneMode) {
-      const { basin, season, name } = hurricaneMode.params as any; // how come you have {}
+      const { basin, season, name } = hurricaneMode.params as { basin: string, season: number, name: string };
       mode.setHurricaneMode();
       fetchHurricane(basin, season, name).then(mode.setHurricane).catch(console.log);
       return;
@@ -34,7 +32,13 @@ const Application: React.FC = () => {
     history.push('/atlantic/2017/maria');
   };
   
-  useEffect(setMode, [!!hurricaneMode, !!seasonMode, !!rankingMode, !!searchMode]);
+  // I know. I'm an awful human being.
+  const listeners = [
+    hurricaneMode ? JSON.stringify(hurricaneMode.params) : null,
+    seasonMode ? JSON.stringify(seasonMode.params) : null,
+  ];
+
+  useEffect(setMode, listeners);
 
   return (
     <div>
