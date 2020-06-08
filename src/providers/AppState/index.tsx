@@ -12,6 +12,7 @@ const initialState: AppState = {
       lat: 21.902656006558043,
       lng: -72.88469006709305,
     },
+    loaded: false,
     zoom: 5,
     markers: [],
     polylines: []

@@ -26,6 +26,7 @@ export interface AppMapState {
   zoom: number;
   markers: Marker[];
   polylines: Polyline[];
+  loaded: boolean;
 }
 
 export type SpeedUnit = 'kt' | 'kmh' | 'mph';

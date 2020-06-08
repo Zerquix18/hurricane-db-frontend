@@ -44,7 +44,7 @@ const Seasons: React.FC<SeasonsProps> = ({ onClose }) => {
         </Table.Header>
         <Table.Body>
           { seasons.map(season => {
-            const to = `/atlantic/$${season.season}`;
+            const to = `/atlantic/${season.season}`;
             return (
               <Table.Row key={season.season}>
                 <Table.Cell><Link to={to} onClick={onClose}>{ season.season }</Link></Table.Cell>

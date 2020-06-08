@@ -6,6 +6,7 @@ type ReducerAction = (
   'SET_CENTER' |
   'SET_MARKERS' |
   'SET_POLYLINES' |
+  'SET_LOADED' |
 
   // Set modes
   'SET_MODE_NONE' |
@@ -71,7 +72,14 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
           polylines: action.polylines,
         }
       };
-    
+    case 'SET_LOADED':
+      return {
+        ...state,
+        map: {
+          ...state.map,
+          loaded: action.loaded,
+        }
+      };
     case 'SET_MODE_HURRICANE':
       return {
         ...state,
@@ -90,7 +98,7 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
       const positions = action.hurricane.positions
       let center = state.map.center
       let zoom = state.map.zoom
-      if (positions) {
+      if (state.map.loaded && positions) {
         const position = getHurricaneDefaultPosition(positions);
         center = position.center
         zoom = position.zoom
@@ -158,7 +166,7 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
 
         let center = state.map.center
         let zoom = state.map.zoom
-        if (positions) {
+        if (state.map.loaded && positions) {
           const position = getHurricaneDefaultPosition(positions);
           center = position.center
           zoom = position.zoom

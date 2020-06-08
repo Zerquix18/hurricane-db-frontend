@@ -4,7 +4,7 @@ import { useMap, useMode } from 'hooks';
 import { Simulation } from './controls';
 
 const MapArea: React.FC = () => {
-  const { center, zoom, markers, polylines } = useMap();
+  const { center, zoom, markers, polylines, setLoaded } = useMap();
   const modeState = useMode();
 
   const controls = [];
@@ -40,6 +40,9 @@ const MapArea: React.FC = () => {
         markers={markers}
         polylines={polylines}
         controls={controls}
+        onMapLoaded={() => {
+          setLoaded(true);
+        }}
       />
     </div>
   );
