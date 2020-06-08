@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AppModeHurricane } from 'models';
-import { Loader, Dimmer, Message, Header, Image, Segment, Divider, Popup, Icon } from 'semantic-ui-react';
+import { Loader, Dimmer, Message, Header, Image, Segment, Divider, Popup, Icon, Modal } from 'semantic-ui-react';
 import { translateBasin, formatNumber } from 'utils';
 import format from 'date-fns/format';
 import { HurricaneCharts } from 'UI';
@@ -10,6 +10,7 @@ interface HurricaneSidebarProps {
 }
 
 const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) => {
+  const [modalDescriptionOpen, setModalDescriptionOpen] = useState(false);
   if (hurricaneMode.loading) {
     return (
       <Dimmer active>
@@ -53,21 +54,16 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
         <Segment compact>
           { hurricane.description.substring(0, 280) }
           { hurricane.description.length > 280 && (
-            <Popup
-              on="click"
-              position="left center"
-              trigger={<strong><span style={{ color: 'lightblue' }}>... See more</span></strong>}
-            >
-              { hurricane.description }
-              { hurricane.description_source && (
-                <div style={{ textAlign: 'right' }}>
-                  <a href={hurricane.description_source} target="_blank" rel="noopener noreferrer">
-                    Source&nbsp;
-                    <Icon name="external alternate" size="small" />
-                  </a>
-                </div>
-              )}
-            </Popup>
+            <strong>
+              <span
+                style={{ color: 'lightblue', cursor: 'pointer' }}
+                onClick={() => {
+                  setModalDescriptionOpen(true);
+                }}
+              >
+                ... See more
+              </span>
+            </strong>
           )}
         </Segment>
       )}
@@ -109,6 +105,29 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
       <Divider />
 
       <HurricaneCharts hurricane={hurricane} />
+
+      <Modal
+        open={modalDescriptionOpen}
+        size="small"
+        closeIcon
+        onClose={() => {
+          setModalDescriptionOpen(false);
+        }}
+      >
+        <Modal.Header>Hurricane Description</Modal.Header>
+        <Modal.Content>
+          { hurricane.description }
+          { hurricane.description_source && (
+            <div style={{ textAlign: 'right' }}>
+              <a href={hurricane.description_source} target="_blank" rel="noopener noreferrer">
+                Source&nbsp;
+                <Icon name="external alternate" size="small" />
+              </a>
+            </div>
+          )}
+        </Modal.Content>
+      </Modal>
+
     </div>
   )
 }
