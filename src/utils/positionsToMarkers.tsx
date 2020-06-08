@@ -2,8 +2,10 @@ import React from 'react';
 import { Marker, Hurricane, HurricanePosition } from 'models';
 import format from 'date-fns/format';
 import { getUserTimezone } from 'utils';
-import { useSettings } from 'hooks';
+import { useSettings, useMode } from 'hooks';
 import translateUnit from './translateUnit';
+import { Button } from 'semantic-ui-react';
+import { useHistory } from 'react-router';
 
 const icons = {
   tropicalDepression: '/img/trop-depression.png',
@@ -55,7 +57,7 @@ const positionsToMarkers = (hurricanes: Hurricane[]): Marker[] => {
         classification = 'Tropical Depression';
       }
   
-      const defaultDescription = <PositionDescription position={position} classification={classification} />;
+      const defaultDescription = <PositionDescription hurricane={hurricane} position={position} classification={classification} />;
   
       const marker = {
         id,
@@ -92,12 +94,15 @@ const positionsToMarkers = (hurricanes: Hurricane[]): Marker[] => {
 }
 
 interface PositionDescriptionProps {
+  hurricane: Hurricane;
   position: HurricanePosition;
   classification: string;
 }
 
-const PositionDescription: React.FC<PositionDescriptionProps> = ({ position, classification }) => {
+const PositionDescription: React.FC<PositionDescriptionProps> = ({ hurricane, position, classification }) => {
   const settings = useSettings();
+  const mode = useMode();
+  const history = useHistory();
 
   const speedUnit = settings.units.speed;
   const pressureUnit = settings.units.pressure;
@@ -105,13 +110,26 @@ const PositionDescription: React.FC<PositionDescriptionProps> = ({ position, cla
   const windSpeed = translateUnit({ type: 'speed', value: position.wind_speed, to: speedUnit });
   const pressure = translateUnit({ type: 'pressure', value: position.pressure, to: pressureUnit });
 
+  const onViewThisHurricane = () => {
+    history.push(`/${hurricane.basin}/${hurricane.season}/${hurricane.name.toLowerCase()}`);
+  }
+
   return (
       <div>
+        <h3> { hurricane.name }</h3>
         <strong>Date: </strong>{ format(new Date(position.moment), 'MMMM d, yyyy')}<br />
         <strong>Time: </strong>{ format(new Date(position.moment), 'HH:kk ') } { getUserTimezone() }<br />
         <strong>Classification: </strong>{ classification } <br />
         <strong>Wind Speed: </strong> { windSpeed } { speedUnit }<br />
         <strong>Pressure: </strong> { pressure } { pressureUnit }
+
+        <br />
+
+        { mode.mode.mode === 'season' && (
+          <Button color="blue" size="tiny" onClick={onViewThisHurricane}>
+            View this hurricane
+          </Button>
+        )}
       </div>
   )
 }
