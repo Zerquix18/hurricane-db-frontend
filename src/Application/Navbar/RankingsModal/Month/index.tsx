@@ -6,14 +6,14 @@ import { Link } from 'react-router-dom';
 import format from 'date-fns/format';
 
 interface MonthProps {
-
+  onClose: () => void;
 }
 
 interface HurricaneWithMaxSpeed extends Hurricane {
   max_speed: number;
 }
 
-const Month: React.FC<MonthProps> = () => {
+const Month: React.FC<MonthProps> = ({ onClose }) => {
   const [hurricanes, setHurricanes] = useState<HurricaneWithMaxSpeed[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -52,7 +52,7 @@ const Month: React.FC<MonthProps> = () => {
             const to = `/${hurricane.basin}/${hurricane.season}/${hurricane.name.toLowerCase()}`;
             return (
               <Table.Row key={hurricane.id}>
-                <Table.Cell><Link to={to}>{ hurricane.name }</Link></Table.Cell>
+                <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.name }</Link></Table.Cell>
                 <Table.Cell>{ hurricane.season }</Table.Cell>
                 <Table.Cell>
                   { format(new Date(hurricane.formed), 'MMMM') }

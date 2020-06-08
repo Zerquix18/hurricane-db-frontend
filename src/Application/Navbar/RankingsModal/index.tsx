@@ -10,6 +10,7 @@ import Seasons from './Seasons';
 import FastestMovement from './FastestMovement';
 import LargestPath from './LargestPath';
 import FormationByCategory from './FormationByCategory';
+import { useHistory } from 'react-router';
 
 interface RankingItem {
   title: string;
@@ -20,53 +21,54 @@ interface RankingModalProps {
   onClose: () => void;
 }
 
-const rankings: RankingItem[] = [
-  {
-    title: 'Top by lowest pressure',
-    Component: <LowestPressure />,
-  },
-  {
-    title: 'Top by highest wind speed',
-    Component: <HighestWindSpeed />,
-  },
-  {
-    title: 'Top by fatalities',
-    Component: <Fatalities />,
-  },
-  {
-    title: 'Top by economical damage',
-    Component: <Damage />,
-  },
-  {
-    title: 'Top by month',
-    Component: <Month />,
-  },
-  {
-    title: 'Top by season total',
-    Component: <Seasons />,
-  },
-  {
-    title: 'Fastest movement by land',
-    Component: <FastestMovement />
-  },
-  {
-    title: 'Longest distance traveled',
-    Component: <LargestPath />
-  },
-  {
-    title: 'Earliest formation by category',
-    Component: <FormationByCategory type="earliest" />
-  },
-  {
-    title: 'Latest formation by category',
-    Component: <FormationByCategory type="latest" />
-  }
-];
-
 const RankingModal: React.FC<RankingModalProps> = ({ onClose }) => {
   const [activeIndex, setActiveIndex] = useState(-1);
   // don't automatically render every component as that makes an HTTP call
   const [rendered, setRendered] = useState<number[]>([]);
+  const history = useHistory();
+
+  const rankings: RankingItem[] = [
+    {
+      title: 'Top by lowest pressure',
+      Component: <LowestPressure onClose={onClose} />,
+    },
+    {
+      title: 'Top by highest wind speed',
+      Component: <HighestWindSpeed onClose={onClose} />,
+    },
+    {
+      title: 'Top by fatalities',
+      Component: <Fatalities onClose={onClose} />,
+    },
+    {
+      title: 'Top by economical damage',
+      Component: <Damage onClose={onClose} />,
+    },
+    {
+      title: 'Top by month',
+      Component: <Month onClose={onClose} />,
+    },
+    {
+      title: 'Top by season total',
+      Component: <Seasons onClose={onClose} />,
+    },
+    {
+      title: 'Fastest movement by land',
+      Component: <FastestMovement onClose={onClose} />
+    },
+    {
+      title: 'Longest distance traveled',
+      Component: <LargestPath onClose={onClose} />
+    },
+    {
+      title: 'Earliest formation by category',
+      Component: <FormationByCategory type="earliest" onClose={onClose} />
+    },
+    {
+      title: 'Latest formation by category',
+      Component: <FormationByCategory type="latest" onClose={onClose} />
+    }
+  ];
 
   return (
     <Modal open closeIcon size="fullscreen" onClose={onClose}>

@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 import { formatNumber } from 'utils';
 
 interface FatalitiesProps {
-
+  onClose: () => void;
 }
 
-const Fatalities: React.FC<FatalitiesProps> = () => {
+const Fatalities: React.FC<FatalitiesProps> = ({ onClose }) => {
   const [hurricanes, setHurricanes] = useState<Hurricane[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +47,7 @@ const Fatalities: React.FC<FatalitiesProps> = () => {
             const to = `/${hurricane.basin}/${hurricane.season}/${hurricane.name.toLowerCase()}`;
             return (
               <Table.Row key={hurricane.id}>
-                <Table.Cell><Link to={to}>{ hurricane.name }</Link></Table.Cell>
+                <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.name }</Link></Table.Cell>
                 <Table.Cell>{ hurricane.season }</Table.Cell>
                 <Table.Cell>
                   { hurricane.min_range_fatalities === hurricane.max_range_fatalities ?

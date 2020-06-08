@@ -4,7 +4,7 @@ import { Loader, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 interface SeasonsProps {
-
+  onClose: () => void;
 }
 
 interface Season {
@@ -12,7 +12,7 @@ interface Season {
   total: number;
 }
 
-const Seasons: React.FC<SeasonsProps> = () => {
+const Seasons: React.FC<SeasonsProps> = ({ onClose }) => {
   const [seasons, setSeasons] = useState<Season[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -47,7 +47,7 @@ const Seasons: React.FC<SeasonsProps> = () => {
             const to = `/atlantic/$${season.season}`;
             return (
               <Table.Row key={season.season}>
-                <Table.Cell><Link to={to}>{ season.season }</Link></Table.Cell>
+                <Table.Cell><Link to={to} onClick={onClose}>{ season.season }</Link></Table.Cell>
                 <Table.Cell>{ season.total }</Table.Cell>
               </Table.Row>
             );

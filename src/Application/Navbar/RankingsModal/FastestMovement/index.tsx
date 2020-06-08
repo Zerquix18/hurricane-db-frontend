@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import formatDistance from 'date-fns/formatDistance'
 
 interface FastestMovement {
-
+  onClose: () => void;
 }
 
 interface HurricaneMovement {
@@ -16,7 +16,7 @@ interface HurricaneMovement {
   total_time: number;
 }
 
-const FastestMovement: React.FC<FastestMovement> = () => {
+const FastestMovement: React.FC<FastestMovement> = ({ onClose }) => {
   const [hurricanes, setHurricanes] = useState<HurricaneMovement[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -56,7 +56,7 @@ const FastestMovement: React.FC<FastestMovement> = () => {
             console.log(hurricane.hurricane.formed, hurricane.hurricane.dissipated);
             return (
               <Table.Row key={hurricane.hurricane.id}>
-                <Table.Cell><Link to={to}>{ hurricane.hurricane.name }</Link></Table.Cell>
+                <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.hurricane.name }</Link></Table.Cell>
                 <Table.Cell>{ hurricane.hurricane.season }</Table.Cell>
                 <Table.Cell>{ Math.round(hurricane.total_distance) } meters</Table.Cell>
                 <Table.Cell>

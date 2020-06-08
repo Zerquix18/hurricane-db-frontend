@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { fetchRanking } from 'api';
 import { Hurricane } from 'models';
 import { Loader, Table } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import { formatNumber } from 'utils';
+import { Link } from 'react-router-dom';
 
 interface DamageProps {
-
+  onClose: () => void;
 }
 
-const Damage: React.FC<DamageProps> = () => {
+const Damage: React.FC<DamageProps> = ({ onClose }) => {
   const [hurricanes, setHurricanes] = useState<Hurricane[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -32,8 +32,6 @@ const Damage: React.FC<DamageProps> = () => {
     return <Loader />;
   }
 
-  console.log(loading);
-
   return (
     (
       <Table>
@@ -47,7 +45,9 @@ const Damage: React.FC<DamageProps> = () => {
             const to = `/${hurricane.basin}/${hurricane.season}/${hurricane.name.toLowerCase()}`;
             return (
               <Table.Row key={hurricane.id}>
-                <Table.Cell><Link to={to}>{ hurricane.name }</Link></Table.Cell>
+                <Table.Cell>
+                  <Link to={to} onClick={onClose}>{ hurricane.name }</Link>
+                </Table.Cell>
                 <Table.Cell>{ hurricane.season }</Table.Cell>
                 <Table.Cell>
                   { hurricane.min_range_damage === hurricane.max_range_damage ?

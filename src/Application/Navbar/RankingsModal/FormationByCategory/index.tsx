@@ -7,6 +7,7 @@ import format from 'date-fns/format';
 
 interface FormationByCategoryProps {
   type: 'earliest' | 'latest';
+  onClose: () => void;
 }
 
 interface HurricaneAndCategory {
@@ -24,7 +25,7 @@ const categories = {
   category_5: 'Category 5',
 };
 
-const FormationByCategory: React.FC<FormationByCategoryProps> = ({ type }) => {
+const FormationByCategory: React.FC<FormationByCategoryProps> = ({ type, onClose }) => {
   const [hurricanes, setHurricanes] = useState<HurricaneAndCategory[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -64,7 +65,7 @@ const FormationByCategory: React.FC<FormationByCategoryProps> = ({ type }) => {
             return (
               <Table.Row key={hurricane.storm.id}>
                 <Table.Cell>{ categories[hurricane.type] }</Table.Cell>
-                <Table.Cell><Link to={to}>{ hurricane.storm.name }</Link></Table.Cell>
+                <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.storm.name }</Link></Table.Cell>
                 <Table.Cell>{ hurricane.storm.season }</Table.Cell>
                 <Table.Cell>{ format(new Date(hurricane.reached_at), 'MMMM L, yyyy') }</Table.Cell>
               </Table.Row>
