@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { Menu, Container, Image } from 'semantic-ui-react';
+import { Menu, Container, Image, Icon } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import SettingsModal from './SettingsModal';
 import SeasonModal from './SeasonModal';
 import RankingModal from './RankingsModal';
 
-const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
+interface NavbarProps extends RouteComponentProps {
+  mobileSidebarOpen: boolean;
+  setMobileSidebarOpen: (value: boolean) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ history, mobileSidebarOpen, setMobileSidebarOpen }) => {
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [seasonModalOpen, setSeasonModalOpen] = useState(false);
   const [rankingModalOpen, setRankingModalOpen] = useState(false);
@@ -33,9 +38,16 @@ const Navbar: React.FC<RouteComponentProps> = ({ history }) => {
     marginRight: 5,
   };
 
+  const toggleSidebar = () => {
+    setMobileSidebarOpen(! mobileSidebarOpen);
+  }
+
   return (
     <Menu pointing secondary>
       <Container>
+        <Menu.Item className="mobile-only" onClick={toggleSidebar}>
+          <Icon name="bars" />
+        </Menu.Item>
         <Menu.Item active={pathname === '/'} onClick={() => { goTo('/') }}>
           <Image src={temporaryLogo} style={logoStyle} />
           Home

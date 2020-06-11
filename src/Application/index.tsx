@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import { useRouteMatch, useHistory } from 'react-router';
 import Navbar from './Navbar';
@@ -12,6 +12,7 @@ const Application: React.FC = () => {
   const seasonMode = useRouteMatch({ path: '/:basin/:year', strict: true });
   const history = useHistory();
   const mode = useMode();
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const setMode = () => {
     if (hurricaneMode) {
@@ -42,13 +43,13 @@ const Application: React.FC = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar mobileSidebarOpen={mobileSidebarOpen} setMobileSidebarOpen={setMobileSidebarOpen} />
       <div style={{ marginLeft: 10, marginRight: 10 }}>
         <Grid>
-          <Grid.Column computer={4} style={{ height: '90vh'}}>
+          <Grid.Column computer={4} only="computer" mobile={mobileSidebarOpen ? 16 : undefined}>
             <Sidebar />
           </Grid.Column>
-          <Grid.Column computer={12}>
+          <Grid.Column computer={12} mobile={16} tablet={16}>
             <MapArea />
           </Grid.Column>
         </Grid>
