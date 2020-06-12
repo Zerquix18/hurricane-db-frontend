@@ -10,7 +10,6 @@ import Seasons from './Seasons';
 import FastestMovement from './FastestMovement';
 import LargestPath from './LargestPath';
 import FormationByCategory from './FormationByCategory';
-import { useHistory } from 'react-router';
 
 interface RankingItem {
   title: string;
@@ -25,7 +24,6 @@ const RankingModal: React.FC<RankingModalProps> = ({ onClose }) => {
   const [activeIndex, setActiveIndex] = useState(-1);
   // don't automatically render every component as that makes an HTTP call
   const [rendered, setRendered] = useState<number[]>([]);
-  const history = useHistory();
 
   const rankings: RankingItem[] = [
     {

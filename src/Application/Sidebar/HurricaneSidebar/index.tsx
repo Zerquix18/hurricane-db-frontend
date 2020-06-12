@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AppModeHurricane } from 'models';
-import { Loader, Dimmer, Message, Header, Image, Segment, Divider, Popup, Icon, Modal } from 'semantic-ui-react';
+import { Loader, Dimmer, Message, Header, Image, Segment, Divider, Icon, Modal } from 'semantic-ui-react';
 import { translateBasin, formatNumber } from 'utils';
 import format from 'date-fns/format';
 import { HurricaneCharts } from 'UI';
