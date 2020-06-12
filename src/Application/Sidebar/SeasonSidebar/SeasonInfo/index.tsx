@@ -3,6 +3,7 @@ import { Season } from 'models';
 import { Header } from 'semantic-ui-react';
 import format from 'date-fns/format';
 import { formatNumber } from 'utils';
+import { SeasonCharts } from 'UI';
 
 interface SeasonInfoProps {
   season: Season;
@@ -60,6 +61,9 @@ const SeasonInfo: React.FC<SeasonInfoProps> = ({ season }) => {
         <strong>Name: </strong>
         { season.strongest_storm.name }
       </p>
+
+      <SeasonCharts season={season} />
+      
     </div>
   )
 };
