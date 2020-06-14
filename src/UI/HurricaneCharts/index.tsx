@@ -73,6 +73,24 @@ const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
     return { t: new Date(position.moment ), y: speed };
   }).slice(1);
 
+  console.log(hurricane.positions)
+
+  const ace = (hurricane.positions || []).filter(position => {
+    const validHours = [0, 6, 12, 18];
+    const moment = new Date(position.moment);
+    return validHours.includes(moment.getHours()) && position.wind_speed;
+  }).reduce<{ t: Date, y: number }[]>((result, current, index) => {
+    const moment = new Date(current.moment);
+    const windSpeed = current.wind_speed ** 2;
+
+    if (index === 0) {
+      return [{ t: moment, y: windSpeed }];
+    }
+
+    const previous = result[index - 1];
+    return result.concat({ t: moment, y: previous.y + windSpeed });
+  }, []).map(item => ({ ...item, y: item.y / 10e3 }));
+
   const pressureData = {
     datasets: [
       {
@@ -120,6 +138,16 @@ const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
     ]
   }
 
+  const aceData = {
+    datasets: [
+      {
+        label: 'Accumulated Cyclone Energy',
+        borderColor: '#5ebfff', // BLUE
+        data: ace,
+      },
+    ]
+  }
+
   const tabs = [
     { menuItem: 'Pressure', render: () => <Line key="pressure" data={pressureData} options={options} /> },
     { menuItem: 'Wind Speed', render: () => <Line key="wind_speed" data={windSpeedData} options={options} /> },
@@ -127,6 +155,7 @@ const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
       <Line key="pressure_windspeed" data={pressureAndWindSpeed} options={optionsForPressureAndWS} />
     )},
     { menuItem: 'Speed', render: () => <Line key="speed" data={speedData} options={options} /> },
+    { menuItem: 'ACE', render: () => <Line key="ace" data={aceData} options={options} /> },
   ];
 
   return (
