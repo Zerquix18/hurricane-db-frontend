@@ -10,7 +10,7 @@ interface SeasonBoundaries {
 interface SeasonStatistics {
   total_systems: number;
   total_storms: number;
-  total_hurriccanes: number;
+  total_hurricanes: number;
   total_major_hurricanes: number;
   total_damage: number;
   total_fatalities: number;

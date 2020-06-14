@@ -31,13 +31,13 @@ const SeasonInfo: React.FC<SeasonInfoProps> = ({ season }) => {
       </p>
 
       <p>
-        <strong>Total stors: </strong>
+        <strong>Total storms: </strong>
         { season.statistics.total_storms }
       </p>
 
       <p>
         <strong>Total hurricanes: </strong>
-        { season.statistics.total_hurriccanes }
+        { season.statistics.total_hurricanes }
       </p>
 
       <p>
