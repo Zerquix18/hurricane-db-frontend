@@ -15,6 +15,21 @@ const options = {
   }
 };
 
+const optionsForPressureAndWS = {
+  scales: {
+    xAxes: [{ type: 'time' }],
+    yAxes: [{
+      id: 'pressure',
+      type: 'linear',
+      position: 'left',
+    }, {
+      id: 'wind_speed',
+      type: 'linear',
+      position: 'right',
+    }]
+  }
+}
+
 const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
   const [modalOpen, changeModalOpen] = useState<boolean>(false);
   const settings = useSettings();
@@ -88,9 +103,29 @@ const HurricaneCharts: React.FC<HurricaneChartsProps> = ({ hurricane }) => {
     ]
   };
 
+  const pressureAndWindSpeed = {
+    datasets: [
+      {
+        yAxisID: 'pressure',
+        label: 'Pressure',
+        borderColor: '#5ebfff', // BLUE
+        data: pressures,
+      },
+      {
+        yAxisID: 'wind_speed',
+        label: 'Wind Speed',
+        borderColor: '#ff0000', // RED
+        data: windSpeeds,
+      },
+    ]
+  }
+
   const tabs = [
     { menuItem: 'Pressure', render: () => <Line key="pressure" data={pressureData} options={options} /> },
     { menuItem: 'Wind Speed', render: () => <Line key="wind_speed" data={windSpeedData} options={options} /> },
+    { menuItem: 'Pressure AND Wind Speed', render: () => (
+      <Line key="pressure_windspeed" data={pressureAndWindSpeed} options={optionsForPressureAndWS} />
+    )},
     { menuItem: 'Speed', render: () => <Line key="speed" data={speedData} options={options} /> },
   ];
 
