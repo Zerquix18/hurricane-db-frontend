@@ -19,6 +19,7 @@ const Simulation: React.FC<SimulationProps> = ({ hurricanes }) => {
   const [currentDate, setCurrentDate] = useState(defaultDate);
   const [isPaused, setIsPaused] = useState(true);
   const [speed, setSpeed] = useState(1);
+  const [expanded, setExpanded] = useState(false);
   const map = useMap();
 
   const pausedRef = useRef(isPaused);
@@ -49,6 +50,10 @@ const Simulation: React.FC<SimulationProps> = ({ hurricanes }) => {
 
   const slowDown = () => {
     setSpeed(speed - .2);
+  };
+
+  const toggleExpansion = () => {
+    setExpanded(expanded => ! expanded);
   };
 
   const updateHurricanes = (untilDate: Date) => {
@@ -108,8 +113,21 @@ const Simulation: React.FC<SimulationProps> = ({ hurricanes }) => {
     }
   }, []);
 
+  if (! expanded) {
+    return (
+      <Message size="tiny" style={{ marginBottom: 10 }}>
+        <div style={{ textAlign: 'right'}} onClick={toggleExpansion}>
+          Open simulation <Icon name={ expanded ? 'minus' : 'plus' } />
+        </div>
+      </Message>
+    );
+  }
+
   return (
     <Message size="tiny" style={{ marginBottom: 10 }}>
+      <div style={{ textAlign: 'right'}} onClick={toggleExpansion}>
+        <Icon name={ expanded ? 'minus' : 'plus' } />
+      </div>
       <Message.Content>
 
         <Header as="h5" style={{ textAlign: 'center' }}>
