@@ -3,6 +3,7 @@ import { Season } from 'models';
 import { Message, List, Image, Button } from 'semantic-ui-react';
 import { getHurricaneName } from 'utils';
 import { useHistory } from 'react-router';
+import format from 'date-fns/format';
 
 interface SeasonHurricanesProps {
   season: Season;
@@ -28,11 +29,16 @@ const SeasonHurricanes: React.FC<SeasonHurricanesProps> = ({ season }) => {
             const onView = () => {
               history.push(`/${season.basin}/${season.year}/${system.name.toLowerCase()}`);
             };
+            const formed = format(new Date(system.formed), 'MMMM d');
+            const dissipated = format(new Date(system.dissipated), 'MMMM d');
             return (
               <List.Item key={system.id}>
                 <Image avatar src={system.image_url} />
                 <List.Content>
                   <List.Header># {index + 1} { getHurricaneName(system) }</List.Header>
+                  <List.Description>
+                    { formed } - { dissipated }
+                  </List.Description>
                 </List.Content>
                 <List.Content floated="right">
                   <Button size="tiny" color="blue" onClick={onView}>
