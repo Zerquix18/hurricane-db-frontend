@@ -3,6 +3,8 @@ import { fetchRanking } from 'api';
 import { Hurricane } from 'models';
 import { Loader, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { useSettings } from 'hooks';
+import { translateUnit } from 'utils';
 
 interface LowestPressureProps {
   onClose: () => void;
@@ -15,12 +17,11 @@ interface HurricaneWithMinPressure extends Hurricane {
 const LowestPressure: React.FC<LowestPressureProps> = ({ onClose }) => {
   const [hurricanes, setHurricanes] = useState<HurricaneWithMinPressure[]>([]);
   const [loading, setLoading] = useState(true);
+  const settings = useSettings();
 
   const getHurricanes = async () => {
     try {
-      console.log('...');
       const hurricaness = await fetchRanking('top_by_lowest_pressure');
-      console.log(hurricaness);
       setHurricanes(hurricaness);
     } catch (e) {
       console.log(e);
@@ -37,15 +38,13 @@ const LowestPressure: React.FC<LowestPressureProps> = ({ onClose }) => {
     return <Loader />;
   }
 
-  console.log(loading);
-
   return (
     (
       <Table>
         <Table.Header>
           <Table.HeaderCell>System</Table.HeaderCell>
           <Table.HeaderCell>Year</Table.HeaderCell>
-          <Table.HeaderCell>Minimum Pressure (mb)</Table.HeaderCell>
+          <Table.HeaderCell>Minimum Pressure ({ settings.units.pressure })</Table.HeaderCell>
         </Table.Header>
         <Table.Body>
           { hurricanes.map(hurricane => {
@@ -54,7 +53,9 @@ const LowestPressure: React.FC<LowestPressureProps> = ({ onClose }) => {
               <Table.Row key={hurricane.id}>
                 <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.name }</Link></Table.Cell>
                 <Table.Cell>{ hurricane.season }</Table.Cell>
-                <Table.Cell>{ hurricane.min_pressure }</Table.Cell>
+                <Table.Cell>
+                  { translateUnit({ type: 'pressure', to: settings.units.pressure, value: hurricane.min_pressure }).toFixed(2) }
+                </Table.Cell>
               </Table.Row>
             );
           })}

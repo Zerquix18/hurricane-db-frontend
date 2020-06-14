@@ -3,6 +3,8 @@ import { fetchRanking } from 'api';
 import { Hurricane } from 'models';
 import { Loader, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { useSettings } from 'hooks';
+import { translateUnit } from 'utils';
 
 interface HighestWindSpeedProps {
   onClose: () => void;
@@ -15,6 +17,7 @@ interface HurricaneWithMaxSpeed extends Hurricane {
 const HighestWindSpeed: React.FC<HighestWindSpeedProps> = ({ onClose }) => {
   const [hurricanes, setHurricanes] = useState<HurricaneWithMaxSpeed[]>([]);
   const [loading, setLoading] = useState(true);
+  const settings = useSettings();
 
   const getHurricanes = async () => {
     try {
@@ -43,7 +46,7 @@ const HighestWindSpeed: React.FC<HighestWindSpeedProps> = ({ onClose }) => {
         <Table.Header>
           <Table.HeaderCell>System</Table.HeaderCell>
           <Table.HeaderCell>Year</Table.HeaderCell>
-          <Table.HeaderCell>max speed (kt)</Table.HeaderCell>
+          <Table.HeaderCell>max speed ({ settings.units.speed })</Table.HeaderCell>
         </Table.Header>
         <Table.Body>
           { hurricanes.map(hurricane => {
@@ -52,7 +55,9 @@ const HighestWindSpeed: React.FC<HighestWindSpeedProps> = ({ onClose }) => {
               <Table.Row key={hurricane.id}>
                 <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.name }</Link></Table.Cell>
                 <Table.Cell>{ hurricane.season }</Table.Cell>
-                <Table.Cell>{ hurricane.max_speed }</Table.Cell>
+                <Table.Cell>
+                  { translateUnit({ type: 'speed', to: settings.units.speed, value:  hurricane.max_speed }) }
+                </Table.Cell>
               </Table.Row>
             );
           })}

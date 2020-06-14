@@ -4,6 +4,8 @@ import { Hurricane } from 'models';
 import { Loader, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import formatDistance from 'date-fns/formatDistance'
+import { useSettings } from 'hooks';
+import { translateUnit } from 'utils';
 
 interface FastestMovement {
   onClose: () => void;
@@ -19,6 +21,7 @@ interface HurricaneMovement {
 const FastestMovement: React.FC<FastestMovement> = ({ onClose }) => {
   const [hurricanes, setHurricanes] = useState<HurricaneMovement[]>([]);
   const [loading, setLoading] = useState(true);
+  const settings = useSettings();
 
   const getHurricanes = async () => {
     try {
@@ -39,7 +42,6 @@ const FastestMovement: React.FC<FastestMovement> = ({ onClose }) => {
     return <Loader />;
   }
 
-
   return (
     <>
       <p>Fastest movement across land from start to end</p>
@@ -47,7 +49,7 @@ const FastestMovement: React.FC<FastestMovement> = ({ onClose }) => {
         <Table.Header>
           <Table.HeaderCell>System</Table.HeaderCell>
           <Table.HeaderCell>Year</Table.HeaderCell>
-          <Table.HeaderCell>Distance traveled</Table.HeaderCell>
+          <Table.HeaderCell>Distance traveled ({ settings.units.distance }) </Table.HeaderCell>
           <Table.HeaderCell>Travel time</Table.HeaderCell>
         </Table.Header>
         <Table.Body>
@@ -58,7 +60,9 @@ const FastestMovement: React.FC<FastestMovement> = ({ onClose }) => {
               <Table.Row key={hurricane.hurricane.id}>
                 <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.hurricane.name }</Link></Table.Cell>
                 <Table.Cell>{ hurricane.hurricane.season }</Table.Cell>
-                <Table.Cell>{ Math.round(hurricane.total_distance) } meters</Table.Cell>
+                <Table.Cell>
+                  { translateUnit({ type: 'distance', to: settings.units.distance, value:  hurricane.total_distance }) }
+                </Table.Cell>
                 <Table.Cell>
                   { formatDistance(
                     new Date(hurricane.hurricane.formed),

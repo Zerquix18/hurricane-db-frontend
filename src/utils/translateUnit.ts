@@ -24,9 +24,14 @@ const translateUnit = (args: Args): number => {
   const { type, value, to } = args;
 
   switch (type) {
-    case 'distance':
-      return value; // to determine default
-    case 'pressure': {
+    case 'distance': // meters assumed as default
+      const results: {[key in DistanceUnit]: number } = {
+        m: value,
+        km: value * 1000,
+        mi: value * 0.000621371192,
+      };
+      return parseFloat((results[to as DistanceUnit]).toFixed(2));
+    case 'pressure': { //
       const results: {[key in PressureUnit]: number } = {
         mb: value,
         kpa: value * 0.1,
