@@ -10,13 +10,8 @@ interface LargestPathProps {
   onClose: () => void;
 }
 
-interface HurricaneAndDistance {
-  hurricane: Hurricane;
-  total_distance: number;
-}
-
 const LargestPath: React.FC<LargestPathProps> = ({ onClose }) => {
-  const [hurricanes, setHurricanes] = useState<HurricaneAndDistance[]>([]);
+  const [hurricanes, setHurricanes] = useState<Hurricane[]>([]);
   const [loading, setLoading] = useState(true);
   const settings = useSettings();
 
@@ -49,13 +44,13 @@ const LargestPath: React.FC<LargestPathProps> = ({ onClose }) => {
         </Table.Header>
         <Table.Body>
           { hurricanes.map(hurricane => {
-            const to = `/${hurricane.hurricane.basin}/${hurricane.hurricane.season}/${hurricane.hurricane.name.toLowerCase()}`;
+            const to = `/${hurricane.basin}/${hurricane.season}/${hurricane.name.toLowerCase()}`;
             return (
-              <Table.Row key={hurricane.hurricane.id}>
-                <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.hurricane.name }</Link></Table.Cell>
-                <Table.Cell>{ hurricane.hurricane.season }</Table.Cell>
+              <Table.Row key={hurricane.id}>
+                <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.name }</Link></Table.Cell>
+                <Table.Cell>{ hurricane.season }</Table.Cell>
                 <Table.Cell>
-                  { translateUnit({ type: 'distance', to: settings.units.distance, value: hurricane.total_distance }) }
+                  { translateUnit({ type: 'distance', to: settings.units.distance, value: hurricane.distance_traveled! }) }
                 </Table.Cell>
               </Table.Row>
             );

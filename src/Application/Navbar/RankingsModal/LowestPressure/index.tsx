@@ -10,12 +10,8 @@ interface LowestPressureProps {
   onClose: () => void;
 }
 
-interface HurricaneWithMinPressure extends Hurricane {
-  min_pressure: number;
-}
-
 const LowestPressure: React.FC<LowestPressureProps> = ({ onClose }) => {
-  const [hurricanes, setHurricanes] = useState<HurricaneWithMinPressure[]>([]);
+  const [hurricanes, setHurricanes] = useState<Hurricane[]>([]);
   const [loading, setLoading] = useState(true);
   const settings = useSettings();
 
@@ -54,7 +50,7 @@ const LowestPressure: React.FC<LowestPressureProps> = ({ onClose }) => {
                 <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.name }</Link></Table.Cell>
                 <Table.Cell>{ hurricane.season }</Table.Cell>
                 <Table.Cell>
-                  { translateUnit({ type: 'pressure', to: settings.units.pressure, value: hurricane.min_pressure }).toFixed(2) }
+                  { translateUnit({ type: 'pressure', to: settings.units.pressure, value: hurricane.lowest_pressure! }).toFixed(2) }
                 </Table.Cell>
               </Table.Row>
             );

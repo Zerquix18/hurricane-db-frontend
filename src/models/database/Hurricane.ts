@@ -24,6 +24,13 @@ class Hurricane {
   created_at: string; // a Date string
   updated_at: string; // a Date string
 
+  lowest_pressure: number | null;
+  highest_pressure: number | null;
+  lowest_windspeed: number | null;
+  highest_windspeed: number | null;
+  distance_traveled: number | null;
+  ace: number | null;
+
   positions: HurricanePosition[] | null;
   windspeeds: HurricaneWindSpeed[] | null;
   pressures: HurricanePressure[] | null;

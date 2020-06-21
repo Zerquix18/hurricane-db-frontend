@@ -10,12 +10,8 @@ interface HighestWindSpeedProps {
   onClose: () => void;
 }
 
-interface HurricaneWithMaxSpeed extends Hurricane {
-  max_speed: number;
-}
-
 const HighestWindSpeed: React.FC<HighestWindSpeedProps> = ({ onClose }) => {
-  const [hurricanes, setHurricanes] = useState<HurricaneWithMaxSpeed[]>([]);
+  const [hurricanes, setHurricanes] = useState<Hurricane[]>([]);
   const [loading, setLoading] = useState(true);
   const settings = useSettings();
 
@@ -56,7 +52,7 @@ const HighestWindSpeed: React.FC<HighestWindSpeedProps> = ({ onClose }) => {
                 <Table.Cell><Link to={to} onClick={onClose}>{ hurricane.name }</Link></Table.Cell>
                 <Table.Cell>{ hurricane.season }</Table.Cell>
                 <Table.Cell>
-                  { translateUnit({ type: 'speed', to: settings.units.speed, value:  hurricane.max_speed }) }
+                  { translateUnit({ type: 'speed', to: settings.units.speed, value:  hurricane.highest_windspeed! }) }
                 </Table.Cell>
               </Table.Row>
             );

@@ -7,7 +7,6 @@ import Fatalities from './Fatalities';
 import Damage from './Damage';
 import Month from './Month';
 import Seasons from './Seasons';
-import FastestMovement from './FastestMovement';
 import LargestPath from './LargestPath';
 import FormationByCategory from './FormationByCategory';
 
@@ -49,10 +48,6 @@ const RankingModal: React.FC<RankingModalProps> = ({ onClose }) => {
     {
       title: 'Top by season total',
       Component: <Seasons onClose={onClose} />,
-    },
-    {
-      title: 'Fastest movement by land',
-      Component: <FastestMovement onClose={onClose} />
     },
     {
       title: 'Longest distance traveled',

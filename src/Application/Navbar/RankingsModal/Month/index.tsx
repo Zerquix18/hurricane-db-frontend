@@ -9,12 +9,8 @@ interface MonthProps {
   onClose: () => void;
 }
 
-interface HurricaneWithMaxSpeed extends Hurricane {
-  max_speed: number;
-}
-
 const Month: React.FC<MonthProps> = ({ onClose }) => {
-  const [hurricanes, setHurricanes] = useState<HurricaneWithMaxSpeed[]>([]);
+  const [hurricanes, setHurricanes] = useState<Hurricane[]>([]);
   const [loading, setLoading] = useState(true);
 
   const getHurricanes = async () => {
@@ -58,7 +54,7 @@ const Month: React.FC<MonthProps> = ({ onClose }) => {
                   { format(new Date(hurricane.formed), 'MMMM') }
                 </Table.Cell>
                 <Table.Cell>
-                  { hurricane.max_speed }
+                  { hurricane.highest_windspeed }
                 </Table.Cell>
               </Table.Row>
             );
