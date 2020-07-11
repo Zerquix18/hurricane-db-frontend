@@ -1,4 +1,4 @@
-import { AppState, Season } from 'models';
+import { AppState, Season, Hurricane } from 'models';
 import { positionsToMarkers, hurricanesToPolylines, getHurricaneDefaultPosition } from 'utils';
 
 type ReducerAction = (
@@ -22,7 +22,10 @@ type ReducerAction = (
   'SEASON_MODE_SET_ERROR' |
 
 
-  'SETTINGS_SET_UNITS'
+  'SETTINGS_SET_UNITS' |
+
+  'SET_MODE_SEARCH' |
+  'SET_MODE_SEARCH_RESULTS'
 
   // ..
 )
@@ -154,7 +157,7 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
           }
         };
   
-      case 'SEASON_MODE_SET_SEASON':
+      case 'SEASON_MODE_SET_SEASON': {
         if (state.mode.mode !== 'season') {
           return state;
         }
@@ -187,6 +190,7 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
             zoom,
           }
         };
+      }
       case 'SEASON_MODE_SET_LOADING':
         return {
           ...state,
@@ -219,6 +223,48 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
         }
       }
     
+    case 'SET_MODE_SEARCH':
+      return {
+        ...state,
+        mode: {
+          mode: 'search',
+          loading: true,
+          results: [],
+          error: '',
+        },
+      };
+    case 'SET_MODE_SEARCH_RESULTS': {
+      if (state.mode.mode !== 'search') {
+        return state;
+      }
+
+      const positions = (action.results as Hurricane[]).map(system => {
+        return system.positions || [];
+      }).flat();
+
+      let center = state.map.center
+      let zoom = state.map.zoom
+      if (state.map.loaded && positions) {
+        const position = getHurricaneDefaultPosition(positions);
+        center = position.center
+        zoom = position.zoom
+      }
+      return {
+        ...state,
+        mode: {
+          ...state.mode,
+          loading: false,
+          results: action.results,
+        },
+        map: {
+          ...state.map,
+          markers: positionsToMarkers(action.results),
+          polylines: hurricanesToPolylines(action.results),
+          center,
+          zoom,
+        }
+      }
+    }
     default:
       throw new Error("This will never happen hahaha (i hope pls)")
   }

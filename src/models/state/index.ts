@@ -19,7 +19,14 @@ export interface AppModeSeason {
   error: string;
 }
 
-export type AppMode = AppModeNone | AppModeHurricane | AppModeSeason;
+export interface AppModeSearch {
+  mode: 'search';
+  loading: boolean;
+  results: Hurricane[];
+  error: string;
+}
+
+export type AppMode = AppModeNone | AppModeHurricane | AppModeSeason | AppModeSearch;
 
 export interface AppMapState {
   center: LatLng;

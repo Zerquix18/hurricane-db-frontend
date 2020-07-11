@@ -28,6 +28,9 @@ const Navbar: React.FC<NavbarProps> = ({ history, mobileSidebarOpen, setMobileSi
   const toggleRankings = () => {
     setRankingModalOpen(! rankingModalOpen);
   };
+  const setModeSearch = () => {
+    history.push('/search');
+  };
 
   const { location: { pathname } } = history;
 
@@ -57,6 +60,9 @@ const Navbar: React.FC<NavbarProps> = ({ history, mobileSidebarOpen, setMobileSi
         </Menu.Item>
         <Menu.Item onClick={toggleRankings}>
           Rankings
+        </Menu.Item>
+        <Menu.Item onClick={setModeSearch}>
+          Search
         </Menu.Item>
         
         <Menu.Menu position="right">

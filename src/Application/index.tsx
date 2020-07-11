@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from 'semantic-ui-react';
-import { useRouteMatch, useHistory } from 'react-router';
+import { useRouteMatch, useHistory, useLocation } from 'react-router';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import MapArea from './MapArea';
-import { fetchHurricane, fetchSeason } from 'api';
+import { fetchHurricane, fetchSeason, fetchSearch } from 'api';
 import { useMode } from 'hooks';
 
 const Application: React.FC = () => {
   const hurricaneMode = useRouteMatch({ path: '/:basin/:season/:name', strict: true });
   const seasonMode = useRouteMatch({ path: '/:basin/:year', strict: true });
+  const searchMode = useRouteMatch({ path: '/search', strict: true });
+  const location = useLocation();
   const history = useHistory();
   const mode = useMode();
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -29,6 +31,12 @@ const Application: React.FC = () => {
       return;
     }
 
+    if (searchMode) {
+      mode.setSearchMode();
+      fetchSearch(location.search).then(mode.setSearch).catch(console.log);
+      return;
+    }
+
     // no mode detected
     history.push('/atlantic/2017/maria');
   };
@@ -37,6 +45,7 @@ const Application: React.FC = () => {
   const listeners = [
     hurricaneMode ? JSON.stringify(hurricaneMode.params) : null,
     seasonMode ? JSON.stringify(seasonMode.params) : null,
+    searchMode ? location.search : null,
   ];
 
   useEffect(setMode, listeners);

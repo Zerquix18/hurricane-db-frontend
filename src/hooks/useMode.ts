@@ -14,6 +14,9 @@ const useMode = () => {
     
     setSeasonMode: () => dispatch({ type: 'SET_MODE_SEASON' }),
     setSeason: (season: Season) => dispatch({ type: 'SEASON_MODE_SET_SEASON', season }),
+
+    setSearchMode: () => dispatch({ type: 'SET_MODE_SEARCH' }),
+    setSearch: (results: Hurricane[]) => dispatch({ type: 'SET_MODE_SEARCH_RESULTS', results })
   }
 }
 
