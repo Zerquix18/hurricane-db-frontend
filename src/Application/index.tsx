@@ -38,7 +38,7 @@ const Application: React.FC = () => {
     }
 
     // no mode detected
-    history.push('/atlantic/2017/maria');
+    history.push('/atlantic/2020');
   };
   
   // I know. I'm an awful human being.
