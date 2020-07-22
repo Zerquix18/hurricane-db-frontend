@@ -32,8 +32,10 @@ const Application: React.FC = () => {
     }
 
     if (searchMode) {
-      mode.setSearchMode();
-      fetchSearch(location.search).then(mode.setSearch).catch(console.log);
+      mode.setSearchMode(!! location.search);
+      if (location.search) {
+        fetchSearch(location.search).then(mode.setSearch).catch(console.log);
+      }
       return;
     }
 

@@ -228,7 +228,7 @@ const reducer = (state: AppState, action: ActionParam): AppState => {
         ...state,
         mode: {
           mode: 'search',
-          loading: true,
+          loading: action.loading,
           results: [],
           error: '',
         },
