@@ -43,6 +43,7 @@ const FormationByCategory: React.FC<FormationByCategoryProps> = ({ type, onClose
 
   useEffect(() => {
     getHurricanes();
+    // eslint-disable-next-line
   }, []);
 
   if (loading) {

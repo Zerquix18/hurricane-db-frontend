@@ -111,6 +111,7 @@ const Simulation: React.FC<SimulationProps> = ({ hurricanes }) => {
     return () => {
       clearInterval(id);
     }
+    // eslint-disable-next-line
   }, []);
 
   if (! expanded) {
