@@ -77,9 +77,11 @@ const HurricaneSidebar: React.FC<HurricaneSidebarProps> = ({ hurricaneMode }) =>
       <p>
         <strong>Formed: </strong> { format(new Date(hurricane.formed), 'MMMM L, yyyy') }
       </p>
-      <p>
-        <strong>Dissipated: </strong> { format(new Date(hurricane.dissipated), 'MMMM L, yyyy') }
-      </p>
+      { hurricane.dissipated && (
+        <p>
+          <strong>Dissipated: </strong> { format(new Date(hurricane.dissipated), 'MMMM L, yyyy') }
+        </p>
+      )}
       { hurricane.min_range_fatalities && hurricane.max_range_fatalities && (
         <p>
           <strong>Fatalities: </strong>

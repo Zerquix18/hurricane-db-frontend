@@ -30,7 +30,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchMode }) => {
               history.push(`/${system.basin}/${system.season}/${system.name.toLowerCase()}`);
             };
             const formed = format(new Date(system.formed), 'MMMM d');
-            const dissipated = format(new Date(system.dissipated), 'MMMM d');
+            const dissipated = system.dissipated ? format(new Date(system.dissipated), 'MMMM d') : 'Present';
             return (
               <List.Item key={system.id}>
                 <Image avatar src={system.image_url} />

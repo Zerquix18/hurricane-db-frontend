@@ -21,7 +21,7 @@ const SeasonCharts: React.FC<SeasonChartsProps> = ({ season }) => {
     return systems.length;
   });
   const systemsDissipatedByMonth = [...new Array(months.length)].map((_, month) => {
-    const systems = season.systems.filter(system => new Date(system.dissipated).getMonth() === month);
+    const systems = season.systems.filter(system => !! system.dissipated && new Date(system.dissipated).getMonth() === month);
     return systems.length;
   });
 

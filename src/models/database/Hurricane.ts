@@ -12,7 +12,7 @@ class Hurricane {
   description_source: string | null;
 
   formed: string; // a Date string
-  dissipated: string; // a Date string
+  dissipated: string | null; // a Date string, null if active
 
   min_range_fatalities: number | null;
   max_range_fatalities: number | null;

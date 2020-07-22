@@ -1,4 +1,4 @@
-import { Hurricane, SearchParams } from "models";
+import { Hurricane } from "models";
 
 // wrap this with a try/catch
 const fetchSearch = async (search: string): Promise<Hurricane[]> => {

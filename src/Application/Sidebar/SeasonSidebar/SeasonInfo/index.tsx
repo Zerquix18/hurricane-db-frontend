@@ -20,7 +20,7 @@ const SeasonInfo: React.FC<SeasonInfoProps> = ({ season }) => {
       </p>
       <p>
         <strong>Last system dissipated on: </strong>
-        { format(new Date(season.boundaries.last_system_dissipated_on), 'MMMM d, yyyy, HH:kk') }
+        { season.year === new Date().getFullYear() ? 'Current ongoing season' : format(new Date(season.boundaries.last_system_dissipated_on), 'MMMM d, yyyy, HH:kk') }
       </p>
 
       <Header as="h3">Statistics:</Header>

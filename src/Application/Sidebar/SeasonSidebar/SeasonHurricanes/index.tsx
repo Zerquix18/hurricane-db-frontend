@@ -30,7 +30,7 @@ const SeasonHurricanes: React.FC<SeasonHurricanesProps> = ({ season }) => {
               history.push(`/${season.basin}/${season.year}/${system.name.toLowerCase()}`);
             };
             const formed = format(new Date(system.formed), 'MMMM d');
-            const dissipated = format(new Date(system.dissipated), 'MMMM d');
+            const dissipated = system.dissipated ? format(new Date(system.dissipated), 'MMMM d') : 'Present';
             return (
               <List.Item key={system.id}>
                 <Image avatar src={system.image_url} />
